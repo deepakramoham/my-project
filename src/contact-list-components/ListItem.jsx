@@ -1,5 +1,5 @@
 function ListItem({ student, deleteStudent }) {
-  console.log("list item is running");
+  
 
 
   return (
