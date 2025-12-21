@@ -1,0 +1,141 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25em;
+}
+.outer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  width: 100%;
+  box-shadow: inset 0px 0px 3px black;
+}
+
+.contacts {
+  /*  flex:1 1 0px; */
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0px;
+  width: 100%;
+  padding: 0.25em;
+  overflow-y: auto;
+}
+
+.contact-collector {
+  width: 100%;
+  border-bottom: 2px solid lightgray;
+  padding: 0.75em;
+}
+
+.list-item {
+  padding: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-shadow: 0px 0px 1px black;
+}
+.list-item:hover {
+  transform: scale(101%);
+  background-color: lightgrey;
+}
+
+.list-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input {
+  padding: 0.25em;
+  font-size: 1.25rem;
+  width: 100%;
+}
+
+button {
+  padding: 0.25em;
+}
+
+.name-para {
+  font-size: 1.25rem;
+}
+.phone-number {
+  font-size: 0.9rem;
+  color: gray;
+}
+.delete-button-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  flex: 8;
+}
+
+.list-input-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.list-add-button {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.list-add-button button {
+  width: 80%;
+}
+
+.no-contact-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+@media screen and (min-width: 400px) {
+  .outer-container {
+    width: 80%;
+  }
+}
+@media screen and(min-width:650px) {
+  .list-input {
+    display: flex;
+  }
+}
+@media screen and (min-width: 800px) {
+  .outer-container {
+    width: 65%;
+  }
+  .list-input {
+    display: flex;
+    flex-direction: row;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .outer-container {
+    width: 50%;
+  }
+  .list-input {
+    display: flex;
+    flex-direction: row;
+  }
+}

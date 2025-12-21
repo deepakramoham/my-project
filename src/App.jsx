@@ -5,10 +5,10 @@ import ListInput from "./contact-list-components/ListInput";
 
 function App() {
   const [students, setStudents] = useState([
-    { id: "mbn", name: "Mubeena" },
-    { id: "dpk", name: "Deepak" },
-    { id: "arn", name: "Arun" },
-    { id: "jsh", name: "Jinshi" },
+    { id: "mbn", name: "Mubeena", contact: 9090990099 },
+    { id: "dpk", name: "Deepak", contact: 9090990011 },
+    { id: "arn", name: "Arun", contact: 9090990012 },
+    { id: "jsh", name: "Jinshi", contact: 9090990013 },
   ]);
 
   const addStudent = (newStudent) => {
@@ -19,11 +19,20 @@ function App() {
     setStudents((prev) => prev.filter((std) => std.id !== studentId));
   };
 
-  console.log(students)
+  console.log(students);
+
   return (
     <>
-      <ListInput addStudent={addStudent} />
-      <ListData students={students} deleteStudent={deleteStudent} />
+      <div className="container">
+        <div className="outer-container">
+          <div className="contact-collector">
+            <ListInput addStudent={addStudent} />
+          </div>
+          <div className="contacts">
+            <ListData students={students} deleteStudent={deleteStudent} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }
