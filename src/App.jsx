@@ -32,7 +32,7 @@ function App() {
       <div className="container">
         <div className="outer-container">
           <div className="contact-collector">
-            <ListInput addStudent={addStudent} ref={nameRef} />
+            <ListInput addStudent={addStudent} nameRef={nameRef} />
           </div>
           <div className="contacts">
             <ListData students={students} deleteStudent={deleteStudent} />

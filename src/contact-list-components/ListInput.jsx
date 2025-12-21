@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect, forwardRef } from "react";
+import { useState, useRef } from "react";
 
-const ListInput = forwardRef(({ addStudent }, nameRef) => {
+const ListInput = ({ addStudent, nameRef }) => {
   const contactRef = useRef(null);
 
   const [name, setName] = useState("");
@@ -56,6 +56,6 @@ const ListInput = forwardRef(({ addStudent }, nameRef) => {
       </div>
     </>
   );
-});
+};
 
 export default ListInput;
