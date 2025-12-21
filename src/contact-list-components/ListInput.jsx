@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, forwardRef } from "react";
 
-function ListInput({ addStudent }) {
+const ListInput = forwardRef(({ addStudent }, nameRef) => {
   const contactRef = useRef(null);
-  console.log("list input rendering");
+
   const [name, setName] = useState("");
 
   const handleInputChange = (event) => {
@@ -19,6 +19,9 @@ function ListInput({ addStudent }) {
 
     if (contact && newStudent) {
       addStudent(newStudent);
+      setName("");
+      contactRef.current.value = "";
+      nameRef.current.focus();
     }
   };
 
@@ -28,18 +31,17 @@ function ListInput({ addStudent }) {
         <div className="list-input-container">
           <div className="list-input">
             <input
+              ref={nameRef}
               className="my-input"
               value={name}
               placeholder="Enter your name"
               onChange={handleInputChange}
-              required
             />
 
             <input
               ref={contactRef}
               defaultValue={""}
               placeholder="Contact Number . . ."
-              required
             />
           </div>
 
@@ -54,6 +56,6 @@ function ListInput({ addStudent }) {
       </div>
     </>
   );
-}
+});
 
 export default ListInput;
