@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-const ListInput = ({ addStudent, nameRef }) => {
+const ListInput = ({ addStudent, nameRef, search, setSearch }) => {
   const contactRef = useRef(null);
 
   const [name, setName] = useState("");
@@ -51,7 +51,12 @@ const ListInput = ({ addStudent, nameRef }) => {
         </div>
 
         <div className="list-search">
-          <input placeholder="Search . . . " type="text" />
+          <input
+            placeholder="Search . . . "
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
       </div>
     </>

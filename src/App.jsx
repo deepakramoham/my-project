@@ -5,9 +5,7 @@ import ListInput from "./contact-list-components/ListInput";
 
 function App() {
   const nameRef = useRef(null);
-  const contactBoxRef = useRef(null);
-
-  const [students, setStudents] = useState([
+  const studentData = [
     { id: "mbn", name: "Mubeena", contact: 9090990099 },
     { id: "dpk", name: "Deepak", contact: 9090990011 },
     { id: "arn", name: "Arun", contact: 9090990012 },
@@ -42,17 +40,22 @@ function App() {
     { id: "sanj", name: "Sanjay", contact: 99890123 },
     { id: "kate", name: "Kate", contact: 99901234 },
     { id: "joel", name: "Joel", contact: 98112244 },
-  ]);
+  ];
+
+  const [students, setStudents] = useState(studentData);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const filteredStudents = studentData?.filter((student) =>
+      student?.name?.toLowerCase().includes(search.toLowerCase())
+    );
+
+    setStudents(filteredStudents);
+  }, [search]);
 
   useEffect(() => {
     nameRef.current.focus();
   }, []);
-
-  useEffect(() => {
-    // console.log(contactBoxRef.current.scrollTop);
-    // console.log(contactBoxRef.current.scrollHeight);
-    contactBoxRef.current.scrollTop = contactBoxRef.current.scrollHeight;
-  }, [students]);
 
   const addStudent = (newStudent) => {
     setStudents([...students, newStudent]);
@@ -62,16 +65,19 @@ function App() {
     setStudents((prev) => prev.filter((std) => std.id !== studentId));
   };
 
-  console.log(students);
-
   return (
     <>
       <div className="container">
         <div className="outer-container">
           <div className="contact-collector">
-            <ListInput addStudent={addStudent} nameRef={nameRef} />
+            <ListInput
+              addStudent={addStudent}
+              nameRef={nameRef}
+              search={search}
+              setSearch={setSearch}
+            />
           </div>
-          <div className="contacts" ref={contactBoxRef}>
+          <div className="contacts">
             <ListData students={students} deleteStudent={deleteStudent} />
           </div>
         </div>
