@@ -47,7 +47,7 @@ const AppContextProvider = ({ children }) => {
 
   return (
     <AppContext.Provider value={{ students, setStudents, search, setSearch }}>
-      {children}
+    {children}
     </AppContext.Provider>
   );
 };

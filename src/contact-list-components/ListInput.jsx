@@ -2,13 +2,16 @@ import { useState, useRef, useEffect } from "react";
 import { IoAdd } from "react-icons/io5";
 import { AppContext } from "../context/AppContextProvider";
 import { useContext } from "react";
+import Input from "../components/Input";
 
 const ListInput = () => {
-  console.log("listInput rendered")
+  console.log("listInput rendered");
   const nameRef = useRef(null);
   const contactRef = useRef(null);
   const { students, setStudents, search, setSearch } = useContext(AppContext);
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [contactError, setContactError] = useState("");
 
   useEffect(() => {
     nameRef.current.focus();
@@ -20,19 +23,28 @@ const ListInput = () => {
 
   const addStudent = (newStudent) => {
     setStudents(
-      [newStudent, ...students]?.sort((a, b) => a?.name?.localeCompare(b?.name))
+      [newStudent, ...students]?.sort((a, b) =>
+        a?.name?.localeCompare(b?.name),
+      ),
     );
   };
 
   const handleSubmit = () => {
     const contact = contactRef.current.value;
-    const newStudent = {
-      id: crypto.randomUUID(),
-      name,
-      contact,
-    };
 
-    if (contact && newStudent) {
+    if (!contact) {
+      setContactError("Contact is required");
+    }
+    if (!name) {
+      setNameError("Name is required");
+    }
+
+    if (contact && name) {
+      const newStudent = {
+        id: crypto.randomUUID(),
+        name,
+        contact,
+      };
       addStudent(newStudent);
       setName("");
       contactRef.current.value = "";
@@ -45,18 +57,26 @@ const ListInput = () => {
       <div className="list-input-section">
         <div className="list-input-container">
           <div className="list-input">
-            <input
+            <Input
+              ref={nameRef}
+              className={"my-input"}
+              value={name}
+              placeholder={"Enter your name"}
+              onChange={handleInputChange}
+              error={nameError}
+            />
+            {/* <input
               ref={nameRef}
               className="my-input"
               value={name}
               placeholder="Enter your name"
               onChange={handleInputChange}
             />
-
-            <input
+            <small>{nameError}</small> */}
+            <Input
               ref={contactRef}
-              defaultValue={""}
               placeholder="Contact Number . . ."
+              error={contactError}
             />
           </div>
 
@@ -68,7 +88,7 @@ const ListInput = () => {
         </div>
 
         <div className="list-search">
-          <input
+          <Input
             placeholder="Search . . . "
             type="text"
             value={search}
