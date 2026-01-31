@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { IoAdd } from "react-icons/io5";
 import { AppContext } from "../context/AppContextProvider";
 import { useContext } from "react";
@@ -17,9 +17,9 @@ const ListInput = () => {
     nameRef.current.focus();
   }, []);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = useCallback((event) => {
     setName(event.target.value);
-  };
+  }, []);
 
   const addStudent = (newStudent) => {
     setStudents(
@@ -52,20 +52,24 @@ const ListInput = () => {
     }
   };
 
+  const handleSearch = useCallback((e) => setSearch(e.target.value), []);
+
   return (
     <>
-      <div className="list-input-section">
-        <div className="list-input-container">
-          <div className="list-input">
-            <Input
-              ref={nameRef}
-              className={"my-input"}
-              value={name}
-              placeholder={"Enter your name"}
-              onChange={handleInputChange}
-              error={nameError}
-            />
-            {/* <input
+      <div className="contact-collector">
+        <div className="list-input-section">
+          <div className="list-input-container">
+            <div className="list-input">
+              <Input
+                name={"name"}
+                ref={nameRef}
+                className={"my-input"}
+                value={name}
+                placeholder={"Enter your name"}
+                onChange={handleInputChange}
+                error={nameError}
+              />
+              {/* <input
               ref={nameRef}
               className="my-input"
               value={name}
@@ -73,27 +77,30 @@ const ListInput = () => {
               onChange={handleInputChange}
             />
             <small>{nameError}</small> */}
+              <Input
+                name={"contact"}
+                ref={contactRef}
+                placeholder="Contact Number . . ."
+                error={contactError}
+              />
+            </div>
+
+            <div className="list-add-button">
+              <button onClick={handleSubmit}>
+                <IoAdd />
+              </button>
+            </div>
+          </div>
+
+          <div className="list-search">
             <Input
-              ref={contactRef}
-              placeholder="Contact Number . . ."
-              error={contactError}
+              name={"search"}
+              placeholder="Search . . . "
+              type="text"
+              value={search}
+              onChange={handleSearch}
             />
           </div>
-
-          <div className="list-add-button">
-            <button onClick={handleSubmit}>
-              <IoAdd />
-            </button>
-          </div>
-        </div>
-
-        <div className="list-search">
-          <Input
-            placeholder="Search . . . "
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
         </div>
       </div>
     </>

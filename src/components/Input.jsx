@@ -1,4 +1,6 @@
-const Input = (props) => {
+import { memo } from "react";
+const Input = memo((props) => {
+  
   return (
     <>
       <input
@@ -12,6 +14,6 @@ const Input = (props) => {
       <small style={{ color: "red", height: "10px" }}>{props?.error}</small>
     </>
   );
-};
+});
 
 export default Input;
