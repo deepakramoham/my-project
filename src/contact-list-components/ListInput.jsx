@@ -7,18 +7,25 @@ import Input from "../components/Input";
 const ListInput = () => {
   console.log("listInput rendered");
   const nameRef = useRef(null);
-  const contactRef = useRef(null);
   const { students, setStudents, search, setSearch } = useContext(AppContext);
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [contactError, setContactError] = useState("");
+  const [formValues, setFormValues] = useState({
+    name: "",
+    contact: "",
+  });
+  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
     nameRef.current.focus();
   }, []);
 
   const handleInputChange = useCallback((event) => {
-    setName(event.target.value);
+    const { name, value } = event.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+
+    setFormErrors((prev) => ({
+      ...prev,
+      [name]: value ? "" : `${name} is required`,
+    }));
   }, []);
 
   const addStudent = (newStudent) => {
@@ -29,26 +36,35 @@ const ListInput = () => {
     );
   };
 
+  const resetStates = () => {
+    setFormErrors({});
+    setFormValues({
+      name: "",
+      contact: "",
+    });
+  };
+
+  const validateFormValues = () => {
+    const errors = {};
+    Object.keys(formValues).forEach((key) => {
+      if (!formValues[key]) {
+        errors[key] = `${key} is required`;
+      }
+    });
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = () => {
-    const contact = contactRef.current.value;
-
-    if (!contact) {
-      setContactError("Contact is required");
-    }
-    if (!name) {
-      setNameError("Name is required");
-    }
-
-    if (contact && name) {
+    if (validateFormValues()) {
+      console.log("submitted");
       const newStudent = {
         id: crypto.randomUUID(),
-        name,
-        contact,
+        ...formValues,
       };
       addStudent(newStudent);
-      setName("");
-      contactRef.current.value = "";
       nameRef.current.focus();
+      resetStates();
     }
   };
 
@@ -64,10 +80,10 @@ const ListInput = () => {
                 name={"name"}
                 ref={nameRef}
                 className={"my-input"}
-                value={name}
+                value={formValues?.name || ""}
                 placeholder={"Enter your name"}
                 onChange={handleInputChange}
-                error={nameError}
+                error={formErrors?.name}
               />
               {/* <input
               ref={nameRef}
@@ -79,9 +95,10 @@ const ListInput = () => {
             <small>{nameError}</small> */}
               <Input
                 name={"contact"}
-                ref={contactRef}
+                value={formValues?.contact || ""}
+                onChange={handleInputChange}
                 placeholder="Contact Number . . ."
-                error={contactError}
+                error={formErrors?.contact}
               />
             </div>
 
