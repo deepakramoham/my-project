@@ -9,7 +9,6 @@ const Modal = ({
   SaveButtonText,
   CloseButtonText,
 }) => {
-  console.log(styles)
   return (
     <div className={styles.modal}>
       <div className={styles["modal-content"]}>

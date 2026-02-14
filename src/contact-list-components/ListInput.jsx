@@ -4,6 +4,8 @@ import { AppContext } from "../context/AppContextProvider";
 import { useContext } from "react";
 import Input from "../components/Input";
 import Modal from "../components/Modal";
+import RadioButton from "../components/RadioButton";
+import CheckBox from "../components/CheckBox";
 
 const ListInput = () => {
   console.log("listInput rendered");
@@ -24,13 +26,29 @@ const ListInput = () => {
   }, [modalOpen]);
 
   const handleInputChange = useCallback((event) => {
-    const { name, value } = event.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = event.target;
 
-    setFormErrors((prev) => ({
-      ...prev,
-      [name]: value ? "" : `${name} is required`,
-    }));
+    console.log(name, value, type, checked);
+    if (type === "checkbox") {
+      console.log(event.target);
+      if (checked) {
+        setFormValues((prev) => ({
+          ...prev,
+          [name]: prev[name] ? [...prev[name], value] : [value],
+        }));
+      } else {
+        setFormValues((prev) => ({
+          ...prev,
+          [name]: prev[name]?.filter((v) => v !== value),
+        }));
+      }
+    } else {
+      setFormValues((prev) => ({ ...prev, [name]: value }));
+      setFormErrors((prev) => ({
+        ...prev,
+        [name]: value ? "" : `${name} is required`,
+      }));
+    }
   }, []);
 
   const addStudent = (newStudent) => {
@@ -100,6 +118,32 @@ const ListInput = () => {
                 placeholder="Contact Number . . ."
                 error={formErrors?.contact}
               />
+
+              <div>
+                <RadioButton
+                  label="Gender"
+                  name={"gender"}
+                  options={[
+                    { label: "Male", value: "male" },
+                    { label: "Female", value: "female" },
+                    { label: "Other", value: "other" },
+                  ]}
+                  handleInputChange={handleInputChange}
+                />
+              </div>
+
+              <div>
+                <CheckBox
+                  name={"skills"}
+                  label={"Skills"}
+                  options={[
+                    { label: "HTML", value: "html" },
+                    { label: "CSS", value: "css" },
+                    { label: "Javascript", value: "javascript" },
+                  ]}
+                  handleInputChange={handleInputChange}
+                />
+              </div>
             </div>
           }
           handleSave={handleSubmit}
