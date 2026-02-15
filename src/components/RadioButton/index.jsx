@@ -24,6 +24,7 @@ const RadioButton = ({
               <input
                 id={opt.value}
                 value={opt.value}
+                checked={selectedValue === opt.value}
                 type="radio"
                 name={name}
                 onChange={handleInputChange}

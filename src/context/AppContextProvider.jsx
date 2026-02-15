@@ -4,15 +4,16 @@ import { createContext } from "react";
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
-  console.log("appContextProvider rendered");
   const studentData = [
     {
+      id: "mbn",
       name: "Mubeena",
       gender: "female",
-      skills: ["css, javascript"],
+      skills: ["css", "javascript"],
       course: "react",
     },
     {
+      id: "dpa",
       name: "Deepa",
       contact: "9900990099",
       gender: "female",
@@ -20,17 +21,19 @@ const AppContextProvider = ({ children }) => {
       course: "css",
     },
     {
+      id: "jsh",
       name: "Jinshi",
       contact: "9900990022",
       gender: "female",
-      skills: ["html,javascript"],
+      skills: ["html", "javascript"],
       course: "react",
     },
     {
+      id: "uma",
       name: "Uma",
       contact: "9900990033",
       gender: "female",
-      skills: ["css,javascript"],
+      skills: ["css", "javascript"],
       course: "javascript",
     },
   ]?.sort((a, b) => a?.name?.localeCompare(b?.name));

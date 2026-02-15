@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { IoAdd } from "react-icons/io5";
+
 import { AppContext } from "../context/AppContextProvider";
 import { useContext } from "react";
 import Input from "../components/Input";
@@ -11,14 +11,36 @@ import Table from "../components/Table";
 
 const ManageStudents = () => {
   const nameRef = useRef(null);
-  const { students, setStudents, search, setSearch } = useContext(AppContext);
+  const { students, setStudents } = useContext(AppContext);
   const [formValues, setFormValues] = useState({
     name: "",
     contact: "",
   });
   const [formErrors, setFormErrors] = useState({});
 
+  const [tableData, setTableData] = useState([]);
+
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    const formattedData = students?.map((student, index) => ({
+      ...student,
+      slNo: index + 1,
+      skills: Array.isArray(student?.skills) ? student?.skills?.join(", ") : "",
+    }));
+
+    setTableData(formattedData);
+  }, [students]);
+
+  const handleEdit = (editStudent) => {
+    setModalOpen(true);
+    const updateStudent = students?.find(
+      (student) => student?.id === editStudent?.id,
+    );
+    setFormValues(updateStudent);
+  };
+
+  const handleDelete = (student) => {};
 
   useEffect(() => {
     if (modalOpen) {
@@ -92,10 +114,45 @@ const ManageStudents = () => {
     }
   };
 
-  const handleSearch = useCallback((e) => setSearch(e.target.value), []);
+  const handleAdd = () => {
+    setModalOpen(true);
+  };
 
   const handleClose = () => setModalOpen(!modalOpen);
 
+  const columnData = [
+    { header: "Sl. NO", accessor: "slNo" },
+    { header: "Name", accessor: "name" },
+    { header: "Contact", accessor: "contact" },
+    { header: "Gender", accessor: "gender" },
+    { header: "Skills", accessor: "skills" },
+    { header: "Course", accessor: "course" },
+    {
+      header: "Action",
+      render: (student) => (
+        <>
+          <div className="d-flex gap-2">
+            <div>
+              <button
+                className="btn btn-secondary"
+                onClick={() => handleEdit(student)}
+              >
+                Edit
+              </button>
+            </div>
+            <div>
+              <button
+                className="btn btn-danger"
+                onClick={() => handleDelete(student?.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -130,6 +187,7 @@ const ManageStudents = () => {
                 <RadioButton
                   label="Gender"
                   name={"gender"}
+                  selectedValue={formValues?.gender || ""}
                   options={[
                     { label: "Male", value: "male" },
                     { label: "Female", value: "female" },
@@ -143,6 +201,7 @@ const ManageStudents = () => {
                 <CheckBox
                   name={"skills"}
                   label={"Skills"}
+                  selectedValues={formValues?.skills || []}
                   options={[
                     { label: "HTML", value: "html" },
                     { label: "CSS", value: "css" },
@@ -156,6 +215,7 @@ const ManageStudents = () => {
                 <Dropdown
                   name={"course"}
                   label={"Courses"}
+                  selectedValue={formValues?.course || ""}
                   options={[
                     { label: "HTML", value: "html" },
                     { label: "CSS", value: "css" },
@@ -174,43 +234,10 @@ const ManageStudents = () => {
         />
       )}
 
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "5px",
-        }}
-      >
-        <div style={{ width: "100%" }}>
-          <Input
-            name={"search"}
-            placeholder="Search . . . "
-            type="text"
-            value={search}
-            onChange={handleSearch}
-          />
-        </div>
-        <div className="p-2">
-          <button
-            className="btn btn-success"
-            onClick={() => setModalOpen(!modalOpen)}
-          >
-            <IoAdd style={{ fontSize: "2em" }} />
-          </button>
-        </div>
-      </div>
-
       <Table
-        tableColumns={[
-          { header: "Name", accessor: "name" },
-          { header: "Contact", accessor: "contact" },
-          { header: "Gender", accessor: "gender" },
-          { header: "Skills", accessor: "skills" },
-          { header: "Course", accessor: "course" },
-        ]}
-        data={students}
+        tableColumns={columnData}
+        data={tableData}
+        onAddClick={handleAdd}
       />
     </>
   );
