@@ -20,7 +20,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="students" element={<ManageStudents />} />
           <Route path="students/add-student" element={<Add_Update_Student />} />
           <Route
-            path="students/update-student"
+            path="students/update-student/:studentId"
             element={<Add_Update_Student />}
           />
           <Route path="courses" element={<ManageCourses />} />
