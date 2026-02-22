@@ -1,12 +1,7 @@
-import ManageStudents from "./pages/ManageStudents";
+import Layout from "./Layout";
 
 function App() {
- 
-  return (
-    <>
-      <ManageStudents />
-    </>
-  );
+  return <Layout />;
 }
 
 export default App;

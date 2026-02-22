@@ -2,39 +2,53 @@ import { createContext, useReducer } from "react";
 
 export const AppContext = createContext();
 
-const studentData = [
-  {
-    id: "mbn",
-    name: "Mubeena",
-    gender: "female",
-    skills: ["css", "javascript"],
-    course: "react",
-  },
-  {
-    id: "dpa",
-    name: "Deepa",
-    contact: "9900990099",
-    gender: "female",
-    skills: ["javascript"],
-    course: "css",
-  },
-  {
-    id: "jsh",
-    name: "Jinshi",
-    contact: "9900990022",
-    gender: "female",
-    skills: ["html", "javascript"],
-    course: "react",
-  },
-  {
-    id: "uma",
-    name: "Uma",
-    contact: "9900990033",
-    gender: "female",
-    skills: ["css", "javascript"],
-    course: "javascript",
-  },
-]?.sort((a, b) => a?.name?.localeCompare(b?.name));
+const initialState = {
+  students: [
+    {
+      id: "mbn",
+      name: "Mubeena",
+      gender: "female",
+      skills: ["css", "javascript"],
+      course: "react",
+    },
+    {
+      id: "dpa",
+      name: "Deepa",
+      contact: "9900990099",
+      gender: "female",
+      skills: ["javascript"],
+      course: "css",
+    },
+    {
+      id: "jsh",
+      name: "Jinshi",
+      contact: "9900990022",
+      gender: "female",
+      skills: ["html", "javascript"],
+      course: "react",
+    },
+    {
+      id: "uma",
+      name: "Uma",
+      contact: "9900990033",
+      gender: "female",
+      skills: ["css", "javascript"],
+      course: "javascript",
+    },
+  ]?.sort((a, b) => a?.name?.localeCompare(b?.name)),
+  courses: [
+    {
+      id: "1",
+      courseTitle: "html",
+      paidCourse: "no",
+    },
+    {
+      id: "2",
+      courseTitle: "html",
+      paidCourse: "no",
+    },
+  ],
+};
 
 const appReducer = (state, action) => {
   switch (action.type) {
@@ -66,13 +80,12 @@ const appReducer = (state, action) => {
 };
 
 const AppContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(appReducer, {
-    students: studentData,
-  });
+  const [state, dispatch] = useReducer(appReducer, initialState);
   return (
     <AppContext.Provider
       value={{
         students: state.students,
+        courses: state.courses,
         dispatch,
       }}
     >
