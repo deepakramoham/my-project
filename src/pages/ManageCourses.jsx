@@ -45,7 +45,7 @@ const ManageCourses = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch({ type: "UPDATE_COURSE", payload: id });
+    dispatch({ type: "DELETE_COURSE", payload: id });
   };
 
   useEffect(() => {

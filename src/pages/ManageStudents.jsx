@@ -11,11 +11,22 @@ import Table from "../components/Table";
 
 const ManageStudents = () => {
   const nameRef = useRef(null);
-  const { students, dispatch } = useContext(AppContext);
+  const { students, courses, dispatch } = useContext(AppContext);
+  const [courseOptions, setCourseOptions] = useState([]);
   /*   const [formValues, setFormValues] = useState({
     name: "",
     contact: "",
   }); */
+
+  useEffect(() => {
+    const options = courses?.map((course) => ({
+      label: course?.courseTitle,
+      value: course?.id,
+    }));
+    setCourseOptions(options);
+  }, []);
+
+  console.log(courseOptions);
   const [formValues, setFormValues] = useState({
     name: "",
     contact: "",
@@ -219,12 +230,7 @@ const ManageStudents = () => {
                   name={"course"}
                   label={"Courses"}
                   selectedValue={formValues?.course || ""}
-                  options={[
-                    { label: "HTML", value: "html" },
-                    { label: "CSS", value: "css" },
-                    { label: "Javascript", value: "javascript" },
-                    { label: "React", value: "react" },
-                  ]}
+                  options={courseOptions}
                   handleInputChange={handleInputChange}
                 />
               </div>

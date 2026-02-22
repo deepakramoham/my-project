@@ -1,6 +1,10 @@
 import styles from "../Layout.module.css";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
+  const location = useLocation();
+  const selectedMenu = location.pathname.split("/").pop();
   return (
     <>
       <aside className={styles.sidebar}>
@@ -15,24 +19,32 @@ const Sidebar = () => {
           <span className="fs-4">Course Master</span>
 
           <hr />
-          <ul className="nav nav-pills flex-column mb-auto">
+          <ul className="nav nav-pills flex-column mb-auto ">
             <li className="nav-item">
-              <a className="nav-link" href="/dashboard">
+              <Link
+                className={`nav-link text-white ${selectedMenu === "dashboard" ? "active" : ""} `}
+                to="/dashboard"
+              >
                 Dashboard
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/students">
+              <Link
+                to="/students"
+                className={`nav-link text-white ${selectedMenu === "students" ? "active" : ""} `}
+              >
                 Students
-              </a>
+              </Link>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/courses">
+            <li className="nav-item ">
+              <Link
+                to="/courses"
+                className={`nav-link text-white ${selectedMenu === "courses" ? "active" : ""} `}
+              >
                 Courses
-              </a>
+              </Link>
             </li>
           </ul>
-          <hr />
         </div>
       </aside>
     </>

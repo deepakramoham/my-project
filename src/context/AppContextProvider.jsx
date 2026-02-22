@@ -9,7 +9,7 @@ const initialState = {
       name: "Mubeena",
       gender: "female",
       skills: ["css", "javascript"],
-      course: "react",
+      course: "2",
     },
     {
       id: "dpa",
@@ -17,7 +17,7 @@ const initialState = {
       contact: "9900990099",
       gender: "female",
       skills: ["javascript"],
-      course: "css",
+      course: "1",
     },
     {
       id: "jsh",
@@ -25,7 +25,7 @@ const initialState = {
       contact: "9900990022",
       gender: "female",
       skills: ["html", "javascript"],
-      course: "react",
+      course: "2",
     },
     {
       id: "uma",
@@ -33,18 +33,18 @@ const initialState = {
       contact: "9900990033",
       gender: "female",
       skills: ["css", "javascript"],
-      course: "javascript",
+      course: "2",
     },
   ]?.sort((a, b) => a?.name?.localeCompare(b?.name)),
   courses: [
     {
       id: "1",
-      courseTitle: "html",
+      courseTitle: "HTML",
       paidCourse: "no",
     },
     {
       id: "2",
-      courseTitle: "html",
+      courseTitle: "CSS",
       paidCourse: "no",
     },
   ],
@@ -72,6 +72,25 @@ const appReducer = (state, action) => {
       return {
         ...state,
         students: state.students.filter((std) => std.id !== action.payload),
+      };
+    case "SET_COURSE":
+      return {
+        ...state,
+        courses: [action.payload, ...state.courses],
+      };
+
+    case "UPDATE_COURSE":
+      return {
+        ...state,
+        courses: state?.courses?.map((course) =>
+          course?.id === action.payload?.id ? action.payload : course,
+        ),
+      };
+
+    case "DELETE_COURSE":
+      return {
+        ...state,
+        courses: state.courses.filter((c) => c.id !== action.payload),
       };
 
     default:
