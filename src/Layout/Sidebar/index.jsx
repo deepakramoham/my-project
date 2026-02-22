@@ -1,5 +1,5 @@
 import styles from "../Layout.module.css";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
@@ -21,28 +21,35 @@ const Sidebar = () => {
           <hr />
           <ul className="nav nav-pills flex-column mb-auto ">
             <li className="nav-item">
-              <Link
-                className={`nav-link text-white ${selectedMenu === "dashboard" ? "active" : ""} `}
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link text-white ${isActive ? "active" : ""} `
+                }
+                // className={`nav-link text-white ${selectedMenu === "dashboard" ? "active" : ""} `}
                 to="/dashboard"
               >
                 Dashboard
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link text-white ${isActive ? "active" : ""} `
+                }
                 to="/students"
-                className={`nav-link text-white ${selectedMenu === "students" ? "active" : ""} `}
               >
                 Students
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item ">
-              <Link
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link text-white ${isActive ? "active" : ""} `
+                }
                 to="/courses"
-                className={`nav-link text-white ${selectedMenu === "courses" ? "active" : ""} `}
               >
                 Courses
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>

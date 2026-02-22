@@ -8,6 +8,7 @@ import RadioButton from "../components/RadioButton";
 import CheckBox from "../components/CheckBox";
 import Dropdown from "../components/Dropdown";
 import Table from "../components/Table";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const ManageStudents = () => {
   const nameRef = useRef(null);
@@ -17,6 +18,7 @@ const ManageStudents = () => {
     name: "",
     contact: "",
   }); */
+  const navigate = useNavigate();
 
   useEffect(() => {
     const options = courses?.map((course) => ({
@@ -129,7 +131,8 @@ const ManageStudents = () => {
     }
   };
   const handleAdd = () => {
-    setModalOpen(true);
+    // setModalOpen(true);
+    navigate("/students/add-student");
   };
 
   const handleClose = () => setModalOpen(!modalOpen);
