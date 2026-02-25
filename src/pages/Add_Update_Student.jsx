@@ -9,13 +9,26 @@ const Add_Update_Student = () => {
   const nameRef = useRef(null);
   const navigate = useNavigate();
 
-  const params = useParams();
+  //const params = useParams();
+  const { studentId } = useParams();
  
   useEffect(() => {
     nameRef?.current?.focus();
   }, []);
 
-  const { courses, dispatch } = useContext(AppContext);
+  //const { courses, dispatch } = useContext(AppContext);
+  const { students, courses, dispatch } = useContext(AppContext);
+  useEffect(() => {
+  if (studentId) {
+    const studentToEdit = students?.find(
+      (student) => student.id === studentId
+    );
+
+    if (studentToEdit) {
+      setFormValues(studentToEdit);
+    }
+  }
+}, [studentId, students]);
 
   const [formValues, setFormValues] = useState({
     name: "",

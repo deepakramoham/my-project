@@ -7,21 +7,14 @@ import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
 
 const ManageStudents = () => {
-  const { students, dispatch } = useContext(AppContext);
+  //const { students, dispatch } = useContext(AppContext);
+  const { students, courses, dispatch } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   const [tableData, setTableData] = useState([]);
 
-  useEffect(() => {
-    const formattedData = students?.map((student, index) => ({
-      ...student,
-      slNo: index + 1,
-      skills: Array.isArray(student?.skills) ? student?.skills?.join(", ") : "",
-    }));
-
-    setTableData(formattedData);
-  }, [students]);
+  /*
 
   const handleEdit = (editStudent) => {
     navigate(`/students/update-student/${editStudent?.id}`);
@@ -31,7 +24,28 @@ const ManageStudents = () => {
     // );
     // setFormValues(updateStudent);
   };
+*/
+const handleEdit = (editStudent) => {
+  navigate(`/students/update-student/${editStudent.id}`);
+};
+useEffect(() => {
+  const formattedData = students?.map((student, index) => {
+    const matchedCourse = courses?.find(
+      (course) => course.id === student.course
+    );
 
+    return {
+      ...student,
+      slNo: index + 1,
+      skills: Array.isArray(student?.skills)
+        ? student?.skills?.join(", ")
+        : "",
+      course: matchedCourse ? matchedCourse.courseTitle : "",
+    };
+  });
+
+  setTableData(formattedData);
+}, [students, courses]);
   const handleDelete = (id) => {
     dispatch({ type: "DELETE_STUDENT", payload: id });
   };
