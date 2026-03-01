@@ -107,7 +107,7 @@ const Add_Update_Student = () => {
           id: crypto.randomUUID(),
           ...formValues,
         };
-        dispatch({ type: "SET_STUDENTS", payload: newStudent });
+        dispatch({ type: "ADD_STUDENT", payload: newStudent });
       }
 
       resetStates();

@@ -35,7 +35,7 @@ const initialState = {
       skills: ["css", "javascript"],
       course: "2",
     },
-  ]?.sort((a, b) => a?.name?.localeCompare(b?.name)),
+  ],
   courses: [
     {
       id: "1",
@@ -55,9 +55,12 @@ const appReducer = (state, action) => {
     case "SET_STUDENTS":
       return {
         ...state,
-        students: [action.payload, ...state.students]?.sort((a, b) =>
-          a.name.localeCompare(b.name),
-        ),
+        students: [...action.payload, ...state.students],
+      };
+    case "ADD_STUDENT":
+      return {
+        ...state,
+        students: [action.payload, ...state.students],
       };
 
     case "UPDATE_STUDENT":

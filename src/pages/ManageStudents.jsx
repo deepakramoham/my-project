@@ -5,14 +5,20 @@ import { useContext } from "react";
 
 import Table from "../components/Table";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 const ManageStudents = () => {
-  //const { students, dispatch } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams);
   const { students, courses, dispatch } = useContext(AppContext);
+  const { users } = useLoaderData();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (users && users?.length > 0) {
+      dispatch({ type: "SET_STUDENTS", payload: users });
+    }
+  }, [users]);
 
   const handleEdit = (editStudent) => {
     navigate(`/students/update-student?id=${editStudent?.id}`);
@@ -36,6 +42,7 @@ const ManageStudents = () => {
 
     // setTableData(formattedData);
   }, [students, courses]);
+
   const handleDelete = (id) => {
     dispatch({ type: "DELETE_STUDENT", payload: id });
   };
