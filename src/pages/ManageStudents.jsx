@@ -1,28 +1,40 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useMemo, useEffect } from "react";
 
 import { AppContext } from "../context/AppContextProvider";
 import { useContext } from "react";
 
 import Table from "../components/Table";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useLoaderData } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+// import { useLoaderData } from "react-router-dom";
 
 const ManageStudents = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const { students, courses, dispatch } = useContext(AppContext);
-  const { users } = useLoaderData();
+  // const { users } = useLoaderData();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (users && users?.length > 0) {
-      dispatch({ type: "SET_STUDENTS", payload: users });
-    }
-  }, [users]);
+    const fetchUsers = async () => {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users",
+      );
+      console.log(response);
+      const users = await response.json();
+      const modifiedUsers = users?.map((user) => ({
+        id: user?.id,
+        name: user?.name,
+      }));
+      console.log(modifiedUsers);
+      if (modifiedUsers) {
+        dispatch({ type: "SET_STUDENTS", payload: modifiedUsers });
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const handleEdit = (editStudent) => {
     navigate(`/students/update-student?id=${editStudent?.id}`);
-    // setSearchParams({ id: editStudent?.id, name: editStudent?.name });
   };
   const formattedData = useMemo(() => {
     return students?.map((student, index) => {
@@ -97,3 +109,5 @@ const ManageStudents = () => {
 };
 
 export default ManageStudents;
+
+

@@ -55,7 +55,7 @@ const appReducer = (state, action) => {
     case "SET_STUDENTS":
       return {
         ...state,
-        students: [...action.payload, ...state.students],
+        students: [...state.students, ...action.payload],
       };
     case "ADD_STUDENT":
       return {

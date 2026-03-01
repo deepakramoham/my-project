@@ -14,18 +14,18 @@ const router = createBrowserRouter([
       {
         path: "/students",
         element: <ManageStudents />,
-        loader: async () => {
-          const response = await fetch(
-            "https://jsonplaceholder.typicode.com/users",
-          );
-          const users = await response.json();
-          const modifiedUsers = users?.map((user) => ({
-            id: user?.id,
-            name: user?.name,
-          }));
+        // loader: async () => {
+        //   const response = await fetch(
+        //     "https://jsonplaceholder.typicode.com/users",
+        //   );
+        //   const users = await response.json();
+        //   const modifiedUsers = users?.map((user) => ({
+        //     id: user?.id,
+        //     name: user?.name,
+        //   }));
 
-          return { users: modifiedUsers };
-        },
+        //   return { users: modifiedUsers };
+        // },
       },
       { path: "/students/add-student", element: <Add_Update_Student /> },
       { path: "/students/update-student", element: <Add_Update_Student /> },
