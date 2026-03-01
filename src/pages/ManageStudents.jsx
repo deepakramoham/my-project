@@ -1,13 +1,15 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { AppContext } from "../context/AppContextProvider";
 import { useContext } from "react";
 
 import Table from "../components/Table";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const ManageStudents = () => {
   //const { students, dispatch } = useContext(AppContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams);
   const { students, courses, dispatch } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -26,7 +28,8 @@ const ManageStudents = () => {
   };
 */
   const handleEdit = (editStudent) => {
-    navigate(`/students/update-student/${editStudent?.id}/#student`);
+    navigate(`/students/update-student?id=${editStudent?.id}`);
+    // setSearchParams({ id: editStudent?.id, name: editStudent?.name });
   };
   useEffect(() => {
     const formattedData = students?.map((student, index) => {
