@@ -7,13 +7,14 @@ import { AppContext } from "../context/AppContextProvider";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 const Add_Update_Student = () => {
   const nameRef = useRef(null);
+  const sectionRef = useRef(null);
   const navigate = useNavigate();
 
   //const params = useParams();
   const { studentId } = useParams();
-  const { state } = useLocation();
-  const { student } = state;
-  console.log(student);
+  const location = useLocation();
+  console.log(location);
+  const { hash } = location;
 
   useEffect(() => {
     nameRef?.current?.focus();
@@ -32,6 +33,14 @@ const Add_Update_Student = () => {
       }
     }
   }, [studentId, students]);
+
+  useEffect(() => {
+    if (sectionRef && sectionRef.current) {
+      const element = sectionRef.current;
+      console.log(element);
+      element.scrollIntoView();
+    }
+  }, [hash]);
 
   const [formValues, setFormValues] = useState({
     name: "",
@@ -119,76 +128,83 @@ const Add_Update_Student = () => {
     goBack();
   };
   return (
-    <div className="p-2">
-      <div className="mb-2">
-        <Input
-          ref={nameRef}
-          name={"name"}
-          className={"my-input mb-4"}
-          value={formValues?.name || ""}
-          placeholder={"Enter your name"}
-          onChange={handleInputChange}
-          error={formErrors?.name}
-        />
-      </div>
+    <>
+      <section style={{ minHeight: "200vh" }}>
+        <div className="p-2">
+          <div className="mb-2">
+            <Input
+              ref={nameRef}
+              name={"name"}
+              className={"my-input mb-4"}
+              value={formValues?.name || ""}
+              placeholder={"Enter your name"}
+              onChange={handleInputChange}
+              error={formErrors?.name}
+            />
+          </div>
 
-      <div className="mb-2">
-        <Input
-          name={"contact"}
-          value={formValues?.contact || ""}
-          onChange={handleInputChange}
-          placeholder="Contact Number . . ."
-          error={formErrors?.contact}
-        />
-      </div>
+          <div className="mb-2">
+            <Input
+              name={"contact"}
+              value={formValues?.contact || ""}
+              onChange={handleInputChange}
+              placeholder="Contact Number . . ."
+              error={formErrors?.contact}
+            />
+          </div>
 
-      <div>
-        <RadioButton
-          label="Gender"
-          name={"gender"}
-          selectedValue={formValues?.gender || ""}
-          options={[
-            { label: "Male", value: "male" },
-            { label: "Female", value: "female" },
-            { label: "Other", value: "other" },
-          ]}
-          handleInputChange={handleInputChange}
-        />
-      </div>
+          <div>
+            <RadioButton
+              label="Gender"
+              name={"gender"}
+              selectedValue={formValues?.gender || ""}
+              options={[
+                { label: "Male", value: "male" },
+                { label: "Female", value: "female" },
+                { label: "Other", value: "other" },
+              ]}
+              handleInputChange={handleInputChange}
+            />
+          </div>
 
-      <div className="mb-2">
-        <CheckBox
-          name={"skills"}
-          label={"Skills"}
-          selectedValues={formValues?.skills || []}
-          options={[
-            { label: "HTML", value: "html" },
-            { label: "CSS", value: "css" },
-            { label: "Javascript", value: "javascript" },
-          ]}
-          handleInputChange={handleInputChange}
-        />
-      </div>
+          <div className="mb-2">
+            <CheckBox
+              name={"skills"}
+              label={"Skills"}
+              selectedValues={formValues?.skills || []}
+              options={[
+                { label: "HTML", value: "html" },
+                { label: "CSS", value: "css" },
+                { label: "Javascript", value: "javascript" },
+              ]}
+              handleInputChange={handleInputChange}
+            />
+          </div>
 
-      <div className="mb-2">
-        <Dropdown
-          name={"course"}
-          label={"Courses"}
-          selectedValue={formValues?.course || ""}
-          options={courseOptions}
-          handleInputChange={handleInputChange}
-        />
-      </div>
+          <div className="mb-2">
+            <Dropdown
+              name={"course"}
+              label={"Courses"}
+              selectedValue={formValues?.course || ""}
+              options={courseOptions}
+              handleInputChange={handleInputChange}
+            />
+          </div>
 
-      <div className="mt-5 d-flex justify-content-center gap-2">
-        <button className="btn btn-primary" onClick={handleSubmit}>
-          Save
-        </button>
-        <button className="btn btn-danger" onClick={handleCancel}>
-          Cancel
-        </button>
-      </div>
-    </div>
+          <div className="mt-5 d-flex justify-content-center gap-2">
+            <button className="btn btn-primary" onClick={handleSubmit}>
+              Save
+            </button>
+            <button className="btn btn-danger" onClick={handleCancel}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </section>
+      <section ref={sectionRef} style={{ minHeight: "200vh" }}>
+        <h1>Section two</h1>
+      </section>
+    </>
   );
 };
 

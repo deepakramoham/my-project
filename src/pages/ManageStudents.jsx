@@ -26,7 +26,7 @@ const ManageStudents = () => {
   };
 */
   const handleEdit = (editStudent) => {
-    navigate(`/students/update-student`, { state: { student: editStudent } });
+    navigate(`/students/update-student/${editStudent?.id}/#student`);
   };
   useEffect(() => {
     const formattedData = students?.map((student, index) => {
