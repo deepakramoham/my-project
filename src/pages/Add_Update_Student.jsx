@@ -4,14 +4,17 @@ import CheckBox from "../components/CheckBox";
 import Dropdown from "../components/Dropdown";
 import { useState, useRef, useEffect, useContext, useCallback } from "react";
 import { AppContext } from "../context/AppContextProvider";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 const Add_Update_Student = () => {
   const nameRef = useRef(null);
   const navigate = useNavigate();
 
   //const params = useParams();
   const { studentId } = useParams();
- 
+  const { state } = useLocation();
+  const { student } = state;
+  console.log(student);
+
   useEffect(() => {
     nameRef?.current?.focus();
   }, []);
@@ -19,16 +22,16 @@ const Add_Update_Student = () => {
   //const { courses, dispatch } = useContext(AppContext);
   const { students, courses, dispatch } = useContext(AppContext);
   useEffect(() => {
-  if (studentId) {
-    const studentToEdit = students?.find(
-      (student) => student.id === studentId
-    );
+    if (studentId) {
+      const studentToEdit = students?.find(
+        (student) => student.id === studentId,
+      );
 
-    if (studentToEdit) {
-      setFormValues(studentToEdit);
+      if (studentToEdit) {
+        setFormValues(studentToEdit);
+      }
     }
-  }
-}, [studentId, students]);
+  }, [studentId, students]);
 
   const [formValues, setFormValues] = useState({
     name: "",

@@ -25,27 +25,27 @@ const ManageStudents = () => {
     // setFormValues(updateStudent);
   };
 */
-const handleEdit = (editStudent) => {
-  navigate(`/students/update-student/${editStudent.id}`);
-};
-useEffect(() => {
-  const formattedData = students?.map((student, index) => {
-    const matchedCourse = courses?.find(
-      (course) => course.id === student.course
-    );
+  const handleEdit = (editStudent) => {
+    navigate(`/students/update-student`, { state: { student: editStudent } });
+  };
+  useEffect(() => {
+    const formattedData = students?.map((student, index) => {
+      const matchedCourse = courses?.find(
+        (course) => course.id === student.course,
+      );
 
-    return {
-      ...student,
-      slNo: index + 1,
-      skills: Array.isArray(student?.skills)
-        ? student?.skills?.join(", ")
-        : "",
-      course: matchedCourse ? matchedCourse.courseTitle : "",
-    };
-  });
+      return {
+        ...student,
+        slNo: index + 1,
+        skills: Array.isArray(student?.skills)
+          ? student?.skills?.join(", ")
+          : "",
+        course: matchedCourse ? matchedCourse.courseTitle : "",
+      };
+    });
 
-  setTableData(formattedData);
-}, [students, courses]);
+    setTableData(formattedData);
+  }, [students, courses]);
   const handleDelete = (id) => {
     dispatch({ type: "DELETE_STUDENT", payload: id });
   };
