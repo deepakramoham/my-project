@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 
 import { AppContext } from "../context/AppContextProvider";
 import { useContext } from "react";
@@ -14,25 +14,12 @@ const ManageStudents = () => {
 
   const navigate = useNavigate();
 
-  const [tableData, setTableData] = useState([]);
-
-  /*
-
-  const handleEdit = (editStudent) => {
-    navigate(`/students/update-student/${editStudent?.id}`);
-    // setModalOpen(true);
-    // const updateStudent = students?.find(
-    //   (student) => student?.id === editStudent?.id,
-    // );
-    // setFormValues(updateStudent);
-  };
-*/
   const handleEdit = (editStudent) => {
     navigate(`/students/update-student?id=${editStudent?.id}`);
     // setSearchParams({ id: editStudent?.id, name: editStudent?.name });
   };
-  useEffect(() => {
-    const formattedData = students?.map((student, index) => {
+  const formattedData = useMemo(() => {
+    return students?.map((student, index) => {
       const matchedCourse = courses?.find(
         (course) => course.id === student.course,
       );
@@ -47,7 +34,7 @@ const ManageStudents = () => {
       };
     });
 
-    setTableData(formattedData);
+    // setTableData(formattedData);
   }, [students, courses]);
   const handleDelete = (id) => {
     dispatch({ type: "DELETE_STUDENT", payload: id });
@@ -95,7 +82,7 @@ const ManageStudents = () => {
     <>
       <Table
         tableColumns={columnData}
-        data={tableData}
+        data={formattedData}
         onAddClick={handleAdd}
       />
     </>
