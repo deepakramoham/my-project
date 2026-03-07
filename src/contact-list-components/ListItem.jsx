@@ -1,13 +1,13 @@
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useContext } from "react";
-import { AppContext } from "../context/AppContextProvider";
+import { useDispatch } from "react-redux";
 
 function ListItem({ student }) {
   console.log("listItem rendered");
-  const { setStudents } = useContext(AppContext);
+  const dispatch = useDispatch();
+
 
   const deleteStudent = (studentId) => {
-    setStudents((prev) => prev.filter((std) => std.id !== studentId));
+    dispatch({ type: "delete", payload: studentId });
   };
 
   return (

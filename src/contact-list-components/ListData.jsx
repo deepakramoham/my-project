@@ -1,9 +1,10 @@
 import ListItem from "./ListItem";
-import { useContext } from "react";
-import { AppContext } from "../context/AppContextProvider";
+import { useSelector } from "react-redux";
+
 function ListData() {
   console.log("listData rendered");
-  const { students, search } = useContext(AppContext);
+  const students = useSelector((state) => state.students);
+  const search = useSelector((state) => state.search);
 
   return (
     <>

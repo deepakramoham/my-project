@@ -3,6 +3,7 @@ import ListInput from "./contact-list-components/ListInput";
 
 function App() {
   console.log("app rendered");
+  
   return (
     <>
       <div className="container">

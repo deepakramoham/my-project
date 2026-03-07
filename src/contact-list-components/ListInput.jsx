@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { IoAdd } from "react-icons/io5";
-import { AppContext } from "../context/AppContextProvider";
-import { useContext } from "react";
 import Input from "../components/Input";
 import Modal from "../components/Modal";
+import { useSelector, useDispatch } from "react-redux";
 
 const ListInput = () => {
   console.log("listInput rendered");
   const nameRef = useRef(null);
-  const { students, setStudents, search, setSearch } = useContext(AppContext);
+  const search = useSelector((state) => state.search);
+  const dispatch = useDispatch();
   const [formValues, setFormValues] = useState({
     name: "",
     contact: "",
@@ -34,11 +34,7 @@ const ListInput = () => {
   }, []);
 
   const addStudent = (newStudent) => {
-    setStudents(
-      [newStudent, ...students]?.sort((a, b) =>
-        a?.name?.localeCompare(b?.name),
-      ),
-    );
+    dispatch({ type: "add", payload: newStudent });
   };
 
   const resetStates = () => {
@@ -72,7 +68,10 @@ const ListInput = () => {
     }
   };
 
-  const handleSearch = useCallback((e) => setSearch(e.target.value), []);
+  const handleSearch = useCallback(
+    (e) => dispatch({ type: "search", payload: e.target.value }),
+    [],
+  );
 
   const handleClose = () => setModalOpen(!modalOpen);
 
