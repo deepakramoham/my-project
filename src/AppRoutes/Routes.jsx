@@ -4,11 +4,13 @@ import DashBoard from "../pages/DashBoard";
 import ManageStudents from "../pages/ManageStudents";
 import Add_Update_Student from "../pages/Add_Update_Student";
 import ManageCourses from "../pages/ManageCourses";
+import RouteError from "../pages/RouteError";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <RouteError />,
     children: [
       { path: "/dashboard", element: <DashBoard /> },
       {
