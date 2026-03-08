@@ -1,4 +1,4 @@
-const initialState = {
+const studentState = {
   students: [
     {
       id: "mbn",
@@ -18,7 +18,7 @@ const initialState = {
   ],
 };
 
-const studentReducer = (state = initialState, action) => {
+const studentReducer = (state = studentState, action) => {
   switch (action.type) {
     case "SET_STUDENTS":
       return {

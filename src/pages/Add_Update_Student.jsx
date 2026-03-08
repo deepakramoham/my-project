@@ -20,7 +20,7 @@ const Add_Update_Student = () => {
   // const { students, courses, dispatch } = useContext(AppContext);
 
   const students = useSelector((state) => state.studentState.students);
-  const courses = useSelector((state) => state.CourseState.courses);
+  const courses = useSelector((state) => state.courseState.courses);
 
   const [searchParams] = useSearchParams();
   const studentId = searchParams.get("id");

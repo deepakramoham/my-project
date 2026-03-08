@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  console.log(state);
 
   const students = useSelector((state) => state.studentState.students);
 

@@ -1,4 +1,4 @@
-const initialState = {
+const courseState = {
   courses: [
     {
       id: "1",
@@ -13,7 +13,7 @@ const initialState = {
   ],
 };
 
-const courseReducer = (state = initialState, action) => {
+const courseReducer = (state = courseState, action) => {
   switch (action.type) {
     case "SET_COURSE":
       return {
