@@ -1,4 +1,3 @@
-
 import Input from "../components/Input";
 import RadioButton from "../components/RadioButton";
 import CheckBox from "../components/CheckBox";
@@ -13,18 +12,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Add_Update_Student = () => {
-
   const nameRef = useRef(null);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
- 
   // const { students, courses, dispatch } = useContext(AppContext);
 
- 
-  const students = useSelector((state) => state.students);
-  const courses = useSelector((state) => state.courses);
+  const students = useSelector((state) => state.studentState.students);
+  const courses = useSelector((state) => state.CourseState.courses);
 
   const [searchParams] = useSearchParams();
   const studentId = searchParams.get("id");
@@ -36,7 +32,7 @@ const Add_Update_Student = () => {
   useEffect(() => {
     if (studentId) {
       const studentToEdit = students?.find(
-        (student) => student.id === studentId
+        (student) => student.id === studentId,
       );
 
       if (studentToEdit) {
@@ -60,15 +56,12 @@ const Add_Update_Student = () => {
     }));
 
     setCourseOptions(options);
-
-  }, [courses]); 
+  }, [courses]);
 
   const handleInputChange = useCallback((event) => {
-
     const { name, value, type, checked } = event.target;
 
     if (type === "checkbox") {
-
       if (checked) {
         setFormValues((prev) => ({
           ...prev,
@@ -80,9 +73,7 @@ const Add_Update_Student = () => {
           [name]: prev[name]?.filter((v) => v !== value),
         }));
       }
-
     } else {
-
       setFormValues((prev) => ({
         ...prev,
         [name]: value,
@@ -93,7 +84,6 @@ const Add_Update_Student = () => {
         [name]: value ? "" : `${name} is required`,
       }));
     }
-
   }, []);
 
   const goBack = () => {
@@ -101,7 +91,6 @@ const Add_Update_Student = () => {
   };
 
   const resetStates = () => {
-
     setFormErrors({});
 
     setFormValues({
@@ -113,15 +102,12 @@ const Add_Update_Student = () => {
   };
 
   const validateFormValues = () => {
-
     const errors = {};
 
     Object.keys(formValues).forEach((key) => {
-
       if (!formValues[key]) {
         errors[key] = `${key} is required`;
       }
-
     });
 
     setFormErrors(errors);
@@ -130,18 +116,13 @@ const Add_Update_Student = () => {
   };
 
   const handleSubmit = () => {
-
     if (validateFormValues()) {
-
       if (formValues.id) {
-
         dispatch({
           type: "UPDATE_STUDENT",
           payload: formValues,
         });
-
       } else {
-
         const newStudent = {
           id: crypto.randomUUID(),
           ...formValues,
@@ -164,7 +145,6 @@ const Add_Update_Student = () => {
   return (
     <>
       <div className="p-2">
-
         <div className="mb-2">
           <Input
             ref={nameRef}
@@ -234,11 +214,9 @@ const Add_Update_Student = () => {
             Cancel
           </button>
         </div>
-
       </div>
     </>
   );
 };
 
 export default Add_Update_Student;
-

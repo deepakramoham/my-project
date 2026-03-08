@@ -4,19 +4,21 @@ import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
 
 const ManageStudents = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  console.log(state);
 
-  const dispatch = useDispatch();   
+  const students = useSelector((state) => state.studentState.students);
 
-  const students = useSelector((state) => state.students);
-  const courses = useSelector((state) => state.courses);
-//const { students, courses, dispatch } = useContext(AppContext);
+  const courses = useSelector((state) => state.courseState.courses);
+  //const { students, courses, dispatch } = useContext(AppContext);
   // const { users } = useLoaderData();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/users"
+        "https://jsonplaceholder.typicode.com/users",
       );
 
       const users = await response.json();
@@ -41,7 +43,7 @@ const ManageStudents = () => {
   const formattedData = useMemo(() => {
     return students?.map((student, index) => {
       const matchedCourse = courses?.find(
-        (course) => course.id === student.course
+        (course) => course.id === student.course,
       );
 
       return {

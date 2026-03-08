@@ -1,17 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-
-import { AppContext } from "../context/AppContextProvider";
-import { useContext } from "react";
 import Input from "../components/Input";
 import Modal from "../components/Modal";
 import RadioButton from "../components/RadioButton";
-import CheckBox from "../components/CheckBox";
-import Dropdown from "../components/Dropdown";
 import Table from "../components/Table";
+import { useSelector, useDispatch } from "react-redux";
 
 const ManageCourses = () => {
   const nameRef = useRef(null);
-  const { courses, dispatch } = useContext(AppContext);
+
+  const dispatch = useDispatch();
+  const { courses } = useSelector((state) => state.courseState);
+
   /*   const [formValues, setFormValues] = useState({
     name: "",
     contact: "",

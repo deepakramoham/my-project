@@ -16,21 +16,9 @@ const initialState = {
       course: "1",
     },
   ],
-  courses: [
-    {
-      id: "1",
-      courseTitle: "HTML",
-      paidCourse: "no",
-    },
-    {
-      id: "2",
-      courseTitle: "CSS",
-      paidCourse: "no",
-    },
-  ],
 };
 
-const appReducer = (state = initialState, action) => {
+const studentReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_STUDENTS":
       return {
@@ -48,7 +36,7 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         students: state.students.map((student) =>
-          student.id === action.payload.id ? action.payload : student
+          student.id === action.payload.id ? action.payload : student,
         ),
       };
 
@@ -58,29 +46,9 @@ const appReducer = (state = initialState, action) => {
         students: state.students.filter((std) => std.id !== action.payload),
       };
 
-    case "SET_COURSE":
-      return {
-        ...state,
-        courses: [action.payload, ...state.courses],
-      };
-
-    case "UPDATE_COURSE":
-      return {
-        ...state,
-        courses: state.courses.map((course) =>
-          course.id === action.payload.id ? action.payload : course
-        ),
-      };
-
-    case "DELETE_COURSE":
-      return {
-        ...state,
-        courses: state.courses.filter((c) => c.id !== action.payload),
-      };
-
     default:
       return state;
   }
 };
 
-export default appReducer;
+export default studentReducer;
