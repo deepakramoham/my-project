@@ -1,28 +1,42 @@
+
 import Input from "../components/Input";
 import RadioButton from "../components/RadioButton";
 import CheckBox from "../components/CheckBox";
 import Dropdown from "../components/Dropdown";
-import { useState, useRef, useEffect, useContext, useCallback } from "react";
-import { AppContext } from "../context/AppContextProvider";
-import { useNavigate, useSearchParams } from "react-router-dom";
-const Add_Update_Student = () => {
-  const nameRef = useRef(null);
 
+// import { useState, useRef, useEffect, useContext, useCallback } from "react";
+// import { AppContext } from "../context/AppContextProvider";
+
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+const Add_Update_Student = () => {
+
+  const nameRef = useRef(null);
   const navigate = useNavigate();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
+
+ 
+  // const { students, courses, dispatch } = useContext(AppContext);
+
+ 
+  const students = useSelector((state) => state.students);
+  const courses = useSelector((state) => state.courses);
+
+  const [searchParams] = useSearchParams();
   const studentId = searchParams.get("id");
 
   useEffect(() => {
     nameRef?.current?.focus();
   }, []);
 
-  //const { courses, dispatch } = useContext(AppContext);
-  const { students, courses, dispatch } = useContext(AppContext);
   useEffect(() => {
     if (studentId) {
       const studentToEdit = students?.find(
-        (student) => student.id === studentId,
+        (student) => student.id === studentId
       );
 
       if (studentToEdit) {
@@ -44,13 +58,17 @@ const Add_Update_Student = () => {
       label: course?.courseTitle,
       value: course?.id,
     }));
+
     setCourseOptions(options);
-  }, []);
+
+  }, [courses]); 
 
   const handleInputChange = useCallback((event) => {
-    const { name, value, type, checked, selectedOptions } = event.target;
+
+    const { name, value, type, checked } = event.target;
+
     if (type === "checkbox") {
-      console.log(event.target);
+
       if (checked) {
         setFormValues((prev) => ({
           ...prev,
@@ -62,16 +80,20 @@ const Add_Update_Student = () => {
           [name]: prev[name]?.filter((v) => v !== value),
         }));
       }
-    } /* else if (type === "select-multiple") {
-      const selectedOpt = Array.from(selectedOptions)?.map((opt) => opt.value);
-      setFormValues((prev) => ({ ...prev, [name]: selectedOpt }));
-    } */ else {
-      setFormValues((prev) => ({ ...prev, [name]: value }));
+
+    } else {
+
+      setFormValues((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+
       setFormErrors((prev) => ({
         ...prev,
         [name]: value ? "" : `${name} is required`,
       }));
     }
+
   }, []);
 
   const goBack = () => {
@@ -79,46 +101,70 @@ const Add_Update_Student = () => {
   };
 
   const resetStates = () => {
+
     setFormErrors({});
+
     setFormValues({
       name: "",
       contact: "",
     });
+
     goBack();
   };
 
   const validateFormValues = () => {
+
     const errors = {};
+
     Object.keys(formValues).forEach((key) => {
+
       if (!formValues[key]) {
         errors[key] = `${key} is required`;
       }
+
     });
+
     setFormErrors(errors);
+
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = () => {
+
     if (validateFormValues()) {
+
       if (formValues.id) {
-        dispatch({ type: "UPDATE_STUDENT", payload: formValues });
+
+        dispatch({
+          type: "UPDATE_STUDENT",
+          payload: formValues,
+        });
+
       } else {
+
         const newStudent = {
           id: crypto.randomUUID(),
           ...formValues,
         };
-        dispatch({ type: "ADD_STUDENT", payload: newStudent });
+
+        dispatch({
+          type: "ADD_STUDENT",
+          payload: newStudent,
+        });
       }
 
       resetStates();
     }
   };
+
   const handleCancel = () => {
     goBack();
   };
+
   return (
     <>
       <div className="p-2">
+
         <div className="mb-2">
           <Input
             ref={nameRef}
@@ -183,13 +229,16 @@ const Add_Update_Student = () => {
           <button className="btn btn-primary" onClick={handleSubmit}>
             Save
           </button>
+
           <button className="btn btn-danger" onClick={handleCancel}>
             Cancel
           </button>
         </div>
+
       </div>
     </>
   );
 };
 
 export default Add_Update_Student;
+
