@@ -2,7 +2,7 @@ import Input from "../Input";
 import { IoAdd } from "react-icons/io5";
 import { useEffect, useState } from "react";
 
-const Table = ({ tableColumns, data, onAddClick }) => {
+const Table = ({ tableColumns, data, onAddClick, loading }) => {
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   
@@ -61,19 +61,25 @@ const Table = ({ tableColumns, data, onAddClick }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredData?.length > 0 ? (
-            filteredData?.map((row, index) => (
-              <tr key={index}>
-                {tableColumns?.map((col, index) => (
-                  <td key={index}>
-                    {col?.render ? col?.render(row) : row[col.accessor]}
-                  </td>
-                ))}
+          {!loading ? (
+            filteredData?.length > 0 ? (
+              filteredData?.map((row, index) => (
+                <tr key={index}>
+                  {tableColumns?.map((col, index) => (
+                    <td key={index}>
+                      {col?.render ? col?.render(row) : row[col.accessor]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td>No data found</td>
               </tr>
-            ))
+            )
           ) : (
             <tr>
-              <td>No data found</td>
+              <td>fetching data . . .</td>
             </tr>
           )}
         </tbody>

@@ -19,7 +19,7 @@ const Add_Update_Student = () => {
 
   // const { students, courses, dispatch } = useContext(AppContext);
 
-  const students = useSelector((state) => state.studentState.students);
+  const { students, loading } = useSelector((state) => state.studentState);
   const courses = useSelector((state) => state.courseState.courses);
 
   const [searchParams] = useSearchParams();
@@ -115,6 +115,24 @@ const Add_Update_Student = () => {
     return Object.keys(errors).length === 0;
   };
 
+  const postStudentData = async (data) => {
+    try {
+      dispatch({ type: "POST_STUDENT_DATA_PENDING" });
+      const respnose = await fetch("http://localhost:3500/students", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await respnose.json();
+      dispatch({ type: "POST_STUDENT_DATA_SUCCESS", payload: responseData });
+    } catch (err) {
+      dispatch({ type: "POST_STUDENT_DATA_FAILED", payload: err });
+    }
+  };
+
   const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {
@@ -124,14 +142,15 @@ const Add_Update_Student = () => {
         });
       } else {
         const newStudent = {
-          id: crypto.randomUUID(),
           ...formValues,
         };
 
-        dispatch({
-          type: "ADD_STUDENT",
-          payload: newStudent,
-        });
+        postStudentData(newStudent);
+
+        // dispatch({
+        //   type: "ADD_STUDENT",
+        //   payload: newStudent,
+        // });
       }
 
       resetStates();

@@ -1,37 +1,40 @@
-import { useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
+import { selectAllCourses } from "../Redux/reducers/courseReducer";
+import Loading from "../components/Loading";
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
-
-  const students = useSelector((state) => state.studentState.students);
-
-  const courses = useSelector((state) => state.courseState.courses);
-  //const { students, courses, dispatch } = useContext(AppContext);
-  // const { users } = useLoaderData();
+  const { students, loading, onload } = useSelector(
+    (state) => state.studentState,
+  );
+  const courses = useSelector(selectAllCourses);
   const navigate = useNavigate();
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/users",
-      );
-
-      const users = await response.json();
-
-      const modifiedUsers = users?.map((user) => ({
-        id: user?.id,
-        name: user?.name,
-      }));
-
-      if (modifiedUsers) {
-        dispatch({ type: "SET_STUDENTS", payload: modifiedUsers });
+      // setLoading(true);
+      try {
+        dispatch({ type: "GET_STUDENTS_DATA_PENDING" });
+        // await new Promise((resolve) => setTimeout(resolve, 5000)); //simulating a network delay
+        const response = await fetch("http://localhost:3500/students");
+        const users = await response.json();
+        if (users) {
+          dispatch({ type: "GET_STUDENTS_DATA_SUCCESS", payload: users });
+          // setLoading(false);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({ type: "GET_STUDENTS_DATA_FAILED", payload: err });
       }
     };
 
-    fetchUsers();
+    if (!onload) {
+      fetchUsers();
+    }
   }, [dispatch]);
 
   const handleEdit = (editStudent) => {
@@ -93,11 +96,15 @@ const ManageStudents = () => {
   ];
 
   return (
-    <Table
-      tableColumns={columnData}
-      data={formattedData}
-      onAddClick={handleAdd}
-    />
+    <>
+      {loading && <Loading />}
+      <Table
+        loading={loading}
+        tableColumns={columnData}
+        data={formattedData}
+        onAddClick={handleAdd}
+      />
+    </>
   );
 };
 

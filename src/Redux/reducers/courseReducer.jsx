@@ -1,13 +1,18 @@
 const courseState = {
   courses: [
     {
-      id: "1",
-      courseTitle: "HTML",
+      id: "0c8e84ca-6607-46d6-baa2-457ad06a1ebf",
+      courseTitle: "Javascript",
       paidCourse: "no",
     },
     {
-      id: "2",
+      id: "db120242-f322-41cf-b7eb-8c0ad2a24eca",
       courseTitle: "CSS",
+      paidCourse: "no",
+    },
+    {
+      id: "abf04cd9-f02e-43ef-a9d9-1c725d2f845b",
+      courseTitle: "HTML",
       paidCourse: "no",
     },
   ],
@@ -39,5 +44,7 @@ const courseReducer = (state = courseState, action) => {
       return state;
   }
 };
+
+export const selectAllCourses = (state) => state.courseState.courses;
 
 export default courseReducer;

@@ -1,35 +1,47 @@
 const studentState = {
-  students: [
-    {
-      id: "mbn",
-      name: "Mubeena",
-      gender: "female",
-      skills: ["css", "javascript"],
-      course: "2",
-    },
-    {
-      id: "dpa",
-      name: "Deepa",
-      contact: "9900990099",
-      gender: "female",
-      skills: ["javascript"],
-      course: "1",
-    },
-  ],
+  onload: false,
+  loading: false,
+  error: null,
+  students: [],
 };
 
 const studentReducer = (state = studentState, action) => {
   switch (action.type) {
-    case "SET_STUDENTS":
+    case "GET_STUDENTS_DATA_PENDING":
       return {
         ...state,
-        students: [...state.students, ...action.payload],
+        loading: true,
       };
 
-    case "ADD_STUDENT":
+    case "GET_STUDENTS_DATA_SUCCESS":
       return {
         ...state,
-        students: [action.payload, ...state.students],
+        students: [...action.payload],
+        loading: false,
+        onload: true,
+      };
+    case "GET_STUDENTS_DATA_FAILED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case "POST_STUDENT_DATA_PENDING":
+      return {
+        ...state,
+        loading: true,
+      };
+    case "POST_STUDENT_DATA_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        students: [...state.students, action.payload],
+      };
+    case "POST_STUDENT_DATA_FAILED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
 
     case "UPDATE_STUDENT":

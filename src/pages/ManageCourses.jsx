@@ -4,12 +4,14 @@ import Modal from "../components/Modal";
 import RadioButton from "../components/RadioButton";
 import Table from "../components/Table";
 import { useSelector, useDispatch } from "react-redux";
+import { selectAllCourses } from "../Redux/reducers/courseReducer";
 
 const ManageCourses = () => {
   const nameRef = useRef(null);
 
   const dispatch = useDispatch();
-  const { courses } = useSelector((state) => state.courseState);
+  const courses = useSelector(selectAllCourses);
+  console.log(courses)
 
   /*   const [formValues, setFormValues] = useState({
     name: "",

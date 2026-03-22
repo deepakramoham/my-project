@@ -1,0 +1,21 @@
+{
+  "students": [
+    {
+      "id": "d42488c3-321d-4a2c-a1e7-317b21322b2f",
+      "name": "Uma",
+      "contact": "9900990011",
+      "gender": "female",
+      "skills": ["css"],
+      "course": "abf04cd9-f02e-43ef-a9d9-1c725d2f845b"
+    },
+    {
+      "id": "71225bf1-d0e6-4489-971f-473579200800",
+      "name": "Mubeena",
+      "contact": "9900990099",
+      "gender": "female",
+      "skills": ["javascript"],
+      "course": "0c8e84ca-6607-46d6-baa2-457ad06a1ebf"
+    }
+  ],
+  "courses": []
+}
