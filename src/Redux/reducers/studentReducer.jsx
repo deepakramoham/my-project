@@ -44,18 +44,44 @@ const studentReducer = (state = studentState, action) => {
         error: action.payload,
       };
 
-    case "UPDATE_STUDENT":
+    case "UPDATE_STUDENT_DATA_PENDING":
       return {
         ...state,
+        loading: true,
+      };
+    case "UPDATE_STUDENT_DATA_SUCCESS":
+      return {
+        ...state,
+        loading: false,
         students: state.students.map((student) =>
           student.id === action.payload.id ? action.payload : student,
         ),
       };
 
-    case "DELETE_STUDENT":
+    case "UPDATE_STUDENT_DATA_FAILED":
       return {
         ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case "DELETE_STUDENT_DATA_PENDING":
+      return {
+        ...state,
+        loading: true,
+      };
+    case "DELETE_STUDENT_DATA_SUCCESS":
+      return {
+        ...state,
+        loading: false,
         students: state.students.filter((std) => std.id !== action.payload),
+      };
+
+    case "DELETE_STUDENT_DATA_FAILED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
 
     default:

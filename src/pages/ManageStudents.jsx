@@ -58,8 +58,21 @@ const ManageStudents = () => {
     });
   }, [students, courses]);
 
-  const handleDelete = (id) => {
-    dispatch({ type: "DELETE_STUDENT", payload: id });
+  const handleDelete = async (id) => {
+    try {
+      dispatch({ type: "DELETE_STUDENT_DATA_PENDING" });
+      const response = await fetch(`http://localhost:3500/students/${id}`, {
+        method: "DELETE",
+      });
+
+      console.log(response);
+
+      const result = await response.json();
+
+      dispatch({ type: "DELETE_STUDENT_DATA_SUCCESS", payload: id });
+    } catch (err) {
+      dispatch({ type: "DELETE_STUDENT_DATA_FAILED", err });
+    }
   };
 
   const handleAdd = () => {

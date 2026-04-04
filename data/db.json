@@ -5,7 +5,9 @@
       "name": "Uma",
       "contact": "9900990011",
       "gender": "female",
-      "skills": ["css"],
+      "skills": [
+        "css"
+      ],
       "course": "abf04cd9-f02e-43ef-a9d9-1c725d2f845b"
     },
     {
@@ -13,7 +15,9 @@
       "name": "Mubeena",
       "contact": "9900990099",
       "gender": "female",
-      "skills": ["javascript"],
+      "skills": [
+        "javascript"
+      ],
       "course": "0c8e84ca-6607-46d6-baa2-457ad06a1ebf"
     }
   ],
