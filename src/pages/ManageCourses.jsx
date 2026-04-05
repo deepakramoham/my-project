@@ -5,13 +5,14 @@ import RadioButton from "../components/RadioButton";
 import Table from "../components/Table";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAllCourses } from "../Redux/reducers/courseReducer";
+import { getAllCourses } from "../Redux/actions/courseActions";
 
 const ManageCourses = () => {
   const nameRef = useRef(null);
 
   const dispatch = useDispatch();
-  const courses = useSelector(selectAllCourses);
-  console.log(courses)
+  const { courses, onload } = useSelector((state) => state.courseState);
+ 
 
   /*   const [formValues, setFormValues] = useState({
     name: "",
@@ -27,6 +28,20 @@ const ManageCourses = () => {
   const [tableData, setTableData] = useState([]);
 
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    console.log("component mounted");
+
+    return () => {
+      console.log("component unmounted");
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!onload) {
+      dispatch(getAllCourses());
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     const formattedData = courses?.map((course, index) => ({
@@ -58,7 +73,7 @@ const ManageCourses = () => {
   const handleInputChange = useCallback((event) => {
     const { name, value, type, checked, selectedOptions } = event.target;
     if (type === "checkbox") {
-      console.log(event.target);
+     
       if (checked) {
         setFormValues((prev) => ({
           ...prev,

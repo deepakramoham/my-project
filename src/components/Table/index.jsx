@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const Table = ({ tableColumns, data, onAddClick, loading }) => {
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  
+
   useEffect(() => {
     const filterData = data?.filter((row) =>
       tableColumns?.some((col) => {

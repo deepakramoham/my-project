@@ -10,6 +10,11 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  postStudentData,
+  updateStudentData,
+} from "../Redux/actions/studentActions";
+import { getAllCourses } from "../Redux/actions/courseActions";
 
 const Add_Update_Student = () => {
   const nameRef = useRef(null);
@@ -20,10 +25,16 @@ const Add_Update_Student = () => {
   // const { students, courses, dispatch } = useContext(AppContext);
 
   const { students, loading } = useSelector((state) => state.studentState);
-  const courses = useSelector((state) => state.courseState.courses);
+  const { courses, onload } = useSelector((state) => state.courseState);
 
   const [searchParams] = useSearchParams();
   const studentId = searchParams.get("id");
+
+  useEffect(() => {
+    if (!onload) {
+      dispatch(getAllCourses());
+    }
+  }, [dispatch,onload]);
 
   useEffect(() => {
     nameRef?.current?.focus();
@@ -115,52 +126,6 @@ const Add_Update_Student = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const postStudentData = async (data) => {
-    try {
-      dispatch({ type: "POST_STUDENT_DATA_PENDING" });
-      const respnose = await fetch("http://localhost:3500/students", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const responseData = await respnose.json();
-      dispatch({ type: "POST_STUDENT_DATA_SUCCESS", payload: responseData });
-    } catch (err) {
-      dispatch({ type: "POST_STUDENT_DATA_FAILED", payload: err });
-    }
-  };
-  const updateStudentData = async (studentId, data) => {
-    try {
-      dispatch({ type: "UPDATE_STUDENT_DATA_PENDING" });
-      console.log(data);
-      const response = await fetch(
-        `http://localhost:3500/students/${studentId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        },
-      );
-
-      const updatedData = await response.json();
-
-      dispatch({
-        type: "UPDATE_STUDENT_DATA_SUCCESS",
-        payload: updatedData,
-      });
-    } catch (err) {
-      dispatch({
-        type: "UPDATE_STUDENT_DATA_FAILED",
-        payload: err,
-      });
-    }
-  };
-
   /* const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {
@@ -187,9 +152,9 @@ const Add_Update_Student = () => {
   const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {
-        updateStudentData(studentId, formValues);
+        dispatch(updateStudentData(studentId, formValues));
       } else {
-        postStudentData(formValues);
+        dispatch(postStudentData(formValues));
       }
 
       resetStates();

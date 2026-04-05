@@ -2,40 +2,34 @@ import { useState, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
-import { selectAllCourses } from "../Redux/reducers/courseReducer";
 import Loading from "../components/Loading";
+import { deleteStudent, getAllStudents } from "../Redux/actions/studentActions";
+import { getAllCourses } from "../Redux/actions/courseActions";
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
+
+  
+
   const { students, loading, onload } = useSelector(
     (state) => state.studentState,
   );
-  const courses = useSelector(selectAllCourses);
+
+  const { courses, onload: courseOnload } = useSelector(
+    (state) => state.courseState,
+  );
+
   const navigate = useNavigate();
   // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      // setLoading(true);
-      try {
-        dispatch({ type: "GET_STUDENTS_DATA_PENDING" });
-        // await new Promise((resolve) => setTimeout(resolve, 5000)); //simulating a network delay
-        const response = await fetch("http://localhost:3500/students");
-        const users = await response.json();
-        if (users) {
-          dispatch({ type: "GET_STUDENTS_DATA_SUCCESS", payload: users });
-          // setLoading(false);
-        }
-      } catch (err) {
-        console.log(err);
-        dispatch({ type: "GET_STUDENTS_DATA_FAILED", payload: err });
-      }
-    };
-
-    if (!onload) {
-      fetchUsers();
+    if (!courseOnload) {
+      dispatch(getAllCourses());
     }
-  }, [dispatch]);
+    if (!onload) {
+      dispatch(getAllStudents());
+    }
+  }, [dispatch, onload, courseOnload]);
 
   const handleEdit = (editStudent) => {
     navigate(`/students/update-student?id=${editStudent?.id}`);
@@ -58,20 +52,10 @@ const ManageStudents = () => {
     });
   }, [students, courses]);
 
-  const handleDelete = async (id) => {
-    try {
-      dispatch({ type: "DELETE_STUDENT_DATA_PENDING" });
-      const response = await fetch(`http://localhost:3500/students/${id}`, {
-        method: "DELETE",
-      });
-
-      console.log(response);
-
-      const result = await response.json();
-
-      dispatch({ type: "DELETE_STUDENT_DATA_SUCCESS", payload: id });
-    } catch (err) {
-      dispatch({ type: "DELETE_STUDENT_DATA_FAILED", err });
+  const handleDelete = (id) => {
+    const result = confirm("Are you sure you want to delete this?");
+    if (result) {
+      dispatch(deleteStudent(id));
     }
   };
 

@@ -1,25 +1,32 @@
 const courseState = {
-  courses: [
-    {
-      id: "0c8e84ca-6607-46d6-baa2-457ad06a1ebf",
-      courseTitle: "Javascript",
-      paidCourse: "no",
-    },
-    {
-      id: "db120242-f322-41cf-b7eb-8c0ad2a24eca",
-      courseTitle: "CSS",
-      paidCourse: "no",
-    },
-    {
-      id: "abf04cd9-f02e-43ef-a9d9-1c725d2f845b",
-      courseTitle: "HTML",
-      paidCourse: "no",
-    },
-  ],
+  onload: false,
+  loading: false,
+  error: null,
+  courses: [],
 };
 
 const courseReducer = (state = courseState, action) => {
   switch (action.type) {
+    case "GET_ALL_COURSES_PENDING":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "GET_ALL_COURSES_SUCCESS":
+      return {
+        ...state,
+        courses: [...action.payload],
+        loading: false,
+        onload: true,
+      };
+    case "GET_ALL_COURSES_FAILED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     case "SET_COURSE":
       return {
         ...state,

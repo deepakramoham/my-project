@@ -13,13 +13,31 @@
     {
       "id": "71225bf1-d0e6-4489-971f-473579200800",
       "name": "Mubeena",
-      "contact": "9900990099",
+      "contact": "9900990055",
       "gender": "female",
       "skills": [
-        "javascript"
+        "javascript",
+        "html",
+        "css"
       ],
       "course": "0c8e84ca-6607-46d6-baa2-457ad06a1ebf"
     }
   ],
-  "courses": []
+  "courses": [
+    {
+      "id": "0c8e84ca-6607-46d6-baa2-457ad06a1ebf",
+      "courseTitle": "Javascript",
+      "paidCourse": "no"
+    },
+    {
+      "id": "db120242-f322-41cf-b7eb-8c0ad2a24eca",
+      "courseTitle": "CSS",
+      "paidCourse": "no"
+    },
+    {
+      "id": "abf04cd9-f02e-43ef-a9d9-1c725d2f845b",
+      "courseTitle": "HTML",
+      "paidCourse": "no"
+    }
+  ]
 }
