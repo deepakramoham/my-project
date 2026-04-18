@@ -39,5 +39,6 @@
       "courseTitle": "HTML",
       "paidCourse": "no"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

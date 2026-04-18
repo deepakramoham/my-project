@@ -4,8 +4,13 @@ import Modal from "../components/Modal";
 import RadioButton from "../components/RadioButton";
 import Table from "../components/Table";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllCourses } from "../Redux/reducers/courseReducer";
-import { getAllCourses } from "../Redux/actions/courseActions";
+//import { selectAllCourses } from "../Redux/reducers/courseReducer";
+import {
+  getAllCourses,
+  postCourseData,
+  updateCourse,
+  deleteCourse,
+} from "../Redux/actions/courseActions";
 
 const ManageCourses = () => {
   const nameRef = useRef(null);
@@ -60,9 +65,12 @@ const ManageCourses = () => {
     setFormValues(updatedCourse);
   };
 
+  //const handleDelete = (id) => {
+    //dispatch({ type: "DELETE_COURSE", payload: id });
+  //};
   const handleDelete = (id) => {
-    dispatch({ type: "DELETE_COURSE", payload: id });
-  };
+  dispatch(deleteCourse(id));
+};
 
   useEffect(() => {
     if (modalOpen) {
@@ -117,7 +125,7 @@ const ManageCourses = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = () => {
+ /* const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {
         dispatch({ type: "UPDATE_COURSE", payload: formValues });
@@ -131,7 +139,22 @@ const ManageCourses = () => {
 
       resetStates();
     }
-  };
+  };*/
+  const handleSubmit = () => {
+  if (validateFormValues()) {
+    if (formValues.id) {
+      dispatch(updateCourse(formValues));
+    } else {
+      const newCourse = {
+        id: crypto.randomUUID(),
+        ...formValues,
+      };
+      dispatch(postCourseData(newCourse));
+    }
+
+    resetStates();
+  }
+};
   const handleAdd = () => {
     setModalOpen(true);
   };

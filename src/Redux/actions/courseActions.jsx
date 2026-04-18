@@ -15,3 +15,63 @@ export const getAllCourses = () => async (dispatch) => {
     dispatch({ type: "GET_ALL_COURSES_FAILED", payload: err });
   }
 };
+export const postCourseData = (courseData) => async (dispatch) => {
+  try {
+    const response = await fetch("http://localhost:3500/courses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(courseData),
+    });
+
+    const data = await response.json();
+
+    dispatch({
+      type: "ADD_COURSE_SUCCESS",
+      payload: data,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: "ADD_COURSE_FAILED", payload: err });
+  }
+};
+export const updateCourse = (courseData) => async (dispatch) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3500/courses/${courseData.id}`,
+      {
+        method: "PUT", // or PATCH
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(courseData),
+      }
+    );
+
+    const data = await response.json();
+
+    dispatch({
+      type: "UPDATE_COURSE_SUCCESS",
+      payload: data,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: "UPDATE_COURSE_FAILED", payload: err });
+  }
+};
+export const deleteCourse = (id) => async (dispatch) => {
+  try {
+    await fetch(`http://localhost:3500/courses/${id}`, {
+      method: "DELETE",
+    });
+
+    dispatch({
+      type: "DELETE_COURSE_SUCCESS",
+      payload: id,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: "DELETE_COURSE_FAILED", payload: err });
+  }
+};
