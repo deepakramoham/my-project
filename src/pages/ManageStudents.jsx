@@ -5,12 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import { deleteStudent, getAllStudents } from "../Redux/actions/studentActions";
 import { getAllCourses } from "../Redux/actions/courseActions";
-import { abortGetStudentData } from "../Redux/actions/studentActions";
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
-
-  
 
   const { students, loading, onload } = useSelector(
     (state) => state.studentState,
@@ -24,17 +21,24 @@ const ManageStudents = () => {
   // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
     if (!courseOnload) {
-      dispatch(getAllCourses());
+      dispatch(getAllCourses(controller));
     }
+
+    return () => {
+      controller.abort();
+    };
+  }, [dispatch, courseOnload]);
+
+  useEffect(() => {
+    // if (!courseOnload) {
+    //   dispatch(getAllCourses());
+    // }
     if (!onload) {
       dispatch(getAllStudents());
     }
-
-    // return () => {
-    //   abortGetStudentData();
-    // };
-  }, [dispatch, onload, courseOnload]);
+  }, [dispatch, onload]);
 
   const handleEdit = (editStudent) => {
     navigate(`/students/update-student?id=${editStudent?.id}`);

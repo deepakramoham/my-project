@@ -11,7 +11,6 @@ import {
   postCourseData,
   updateCourse,
   deleteCourse,
-  abortGetAllCourses,
 } from "../Redux/actions/courseActions";
 
 const ManageCourses = () => {
@@ -36,20 +35,12 @@ const ManageCourses = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log("component mounted");
-
-    return () => {
-      console.log("component unmounted");
-    };
-  }, []);
-
-  useEffect(() => {
+    const controller = new AbortController();
     if (!onload) {
-      dispatch(getAllCourses());
+      dispatch(getAllCourses(controller));
     }
-
     return () => {
-      abortGetAllCourses();
+      controller.abort();
     };
   }, [dispatch]);
 
