@@ -1,8 +1,18 @@
+let getController = null;
+
 export const getAllCourses = () => async (dispatch) => {
+  if (getController) {
+    console.log(getController);
+    getController?.abort();
+  }
+  getController = new AbortController();
+
   try {
     dispatch({ type: "GET_ALL_COURSES_PENDING" });
-    // await new Promise((resolve) => setTimeout(resolve, 5000)); //simulating a network delay
-    const response = await fetch("http://localhost:3500/courses");
+    await new Promise((resolve) => setTimeout(resolve, 5000)); //simulating a network delay
+    const response = await fetch("http://localhost:3500/courses", {
+      signal: getController?.signal,
+    });
     const courses = await response.json();
     if (courses) {
       dispatch({
@@ -11,7 +21,11 @@ export const getAllCourses = () => async (dispatch) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    if (err.name === "AbortError") {
+      console.log("Request was successfully cancelled");
+    } else {
+      console.error("An actual network error occurred:", err);
+    }
     dispatch({ type: "GET_ALL_COURSES_FAILED", payload: err });
   }
 };
@@ -75,3 +89,4 @@ export const deleteCourse = (id) => async (dispatch) => {
     dispatch({ type: "DELETE_COURSE_FAILED", payload: err });
   }
 };
+export const abortGetAllCourses = () => getController?.abort();

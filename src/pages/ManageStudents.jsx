@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import { deleteStudent, getAllStudents } from "../Redux/actions/studentActions";
 import { getAllCourses } from "../Redux/actions/courseActions";
+import { abortGetStudentData } from "../Redux/actions/studentActions";
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,10 @@ const ManageStudents = () => {
     if (!onload) {
       dispatch(getAllStudents());
     }
+
+    // return () => {
+    //   abortGetStudentData();
+    // };
   }, [dispatch, onload, courseOnload]);
 
   const handleEdit = (editStudent) => {

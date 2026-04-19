@@ -4,12 +4,14 @@ import Modal from "../components/Modal";
 import RadioButton from "../components/RadioButton";
 import Table from "../components/Table";
 import { useSelector, useDispatch } from "react-redux";
+
 //import { selectAllCourses } from "../Redux/reducers/courseReducer";
 import {
   getAllCourses,
   postCourseData,
   updateCourse,
   deleteCourse,
+  abortGetAllCourses,
 } from "../Redux/actions/courseActions";
 
 const ManageCourses = () => {
@@ -17,7 +19,6 @@ const ManageCourses = () => {
 
   const dispatch = useDispatch();
   const { courses, onload } = useSelector((state) => state.courseState);
- 
 
   /*   const [formValues, setFormValues] = useState({
     name: "",
@@ -46,6 +47,10 @@ const ManageCourses = () => {
     if (!onload) {
       dispatch(getAllCourses());
     }
+
+    return () => {
+      abortGetAllCourses();
+    };
   }, [dispatch]);
 
   useEffect(() => {
@@ -66,11 +71,11 @@ const ManageCourses = () => {
   };
 
   //const handleDelete = (id) => {
-    //dispatch({ type: "DELETE_COURSE", payload: id });
+  //dispatch({ type: "DELETE_COURSE", payload: id });
   //};
   const handleDelete = (id) => {
-  dispatch(deleteCourse(id));
-};
+    dispatch(deleteCourse(id));
+  };
 
   useEffect(() => {
     if (modalOpen) {
@@ -81,7 +86,6 @@ const ManageCourses = () => {
   const handleInputChange = useCallback((event) => {
     const { name, value, type, checked, selectedOptions } = event.target;
     if (type === "checkbox") {
-     
       if (checked) {
         setFormValues((prev) => ({
           ...prev,
@@ -125,7 +129,7 @@ const ManageCourses = () => {
     return Object.keys(errors).length === 0;
   };
 
- /* const handleSubmit = () => {
+  /* const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {
         dispatch({ type: "UPDATE_COURSE", payload: formValues });
@@ -141,20 +145,20 @@ const ManageCourses = () => {
     }
   };*/
   const handleSubmit = () => {
-  if (validateFormValues()) {
-    if (formValues.id) {
-      dispatch(updateCourse(formValues));
-    } else {
-      const newCourse = {
-        id: crypto.randomUUID(),
-        ...formValues,
-      };
-      dispatch(postCourseData(newCourse));
-    }
+    if (validateFormValues()) {
+      if (formValues.id) {
+        dispatch(updateCourse(formValues));
+      } else {
+        const newCourse = {
+          id: crypto.randomUUID(),
+          ...formValues,
+        };
+        dispatch(postCourseData(newCourse));
+      }
 
-    resetStates();
-  }
-};
+      resetStates();
+    }
+  };
   const handleAdd = () => {
     setModalOpen(true);
   };

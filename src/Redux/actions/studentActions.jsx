@@ -1,9 +1,19 @@
+let getController;
+let postController;
+let updateController;
+let deleteController;
+
 export const getAllStudents = () => async (dispatch) => {
   // setLoading(true);
+
+  getController = new AbortController();
+
   try {
     dispatch({ type: "GET_STUDENTS_DATA_PENDING" });
     // await new Promise((resolve) => setTimeout(resolve, 5000)); //simulating a network delay
-    const response = await fetch("http://localhost:3500/students");
+    const response = await fetch("http://localhost:3500/students", {
+      signal: getController?.signal,
+    });
     const users = await response.json();
     if (users) {
       dispatch({
@@ -82,3 +92,5 @@ export const deleteStudent = (id) => async (dispatch) => {
     dispatch({ type: "DELETE_STUDENT_DATA_FAILED", err });
   }
 };
+
+export const abortGetStudentData = () => getController?.abort();
