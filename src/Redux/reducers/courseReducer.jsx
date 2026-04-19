@@ -27,26 +27,42 @@ const courseReducer = (state = courseState, action) => {
         error: action.payload,
       };
 
-    case "SET_COURSE":
+    case "ADD_COURSE_SUCCESS":
       return {
         ...state,
         courses: [action.payload, ...state.courses],
       };
-
-    case "UPDATE_COURSE":
+    case "ADD_COURSE_FAILED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case "UPDATE_COURSE_SUCCESS":
       return {
         ...state,
         courses: state.courses.map((course) =>
           course.id === action.payload.id ? action.payload : course,
         ),
       };
+    case "UPDATE_COURSE_FAILED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
 
-    case "DELETE_COURSE":
+    case "DELETE_COURSE_SUCCESS":
       return {
         ...state,
         courses: state.courses.filter((c) => c.id !== action.payload),
       };
-
+     case "DELETE_COURSE_FAILED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }
