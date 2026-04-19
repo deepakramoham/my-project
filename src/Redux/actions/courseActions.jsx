@@ -41,7 +41,7 @@ export const updateCourse = (courseData) => async (dispatch) => {
     const response = await fetch(
       `http://localhost:3500/courses/${courseData.id}`,
       {
-        method: "PUT", // or PATCH
+        method: "PUT", 
         headers: {
           "Content-Type": "application/json",
         },
