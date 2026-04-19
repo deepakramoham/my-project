@@ -29,6 +29,7 @@ const courseReducer = (state = courseState, action) => {
 
     case "ADD_COURSE_SUCCESS":
       return {
+        loading: false,
         ...state,
         courses: [action.payload, ...state.courses],
       };
@@ -40,6 +41,7 @@ const courseReducer = (state = courseState, action) => {
       };
     case "UPDATE_COURSE_SUCCESS":
       return {
+        loading: false,
         ...state,
         courses: state.courses.map((course) =>
           course.id === action.payload.id ? action.payload : course,
@@ -54,6 +56,7 @@ const courseReducer = (state = courseState, action) => {
 
     case "DELETE_COURSE_SUCCESS":
       return {
+        loading: false,
         ...state,
         courses: state.courses.filter((c) => c.id !== action.payload),
       };
