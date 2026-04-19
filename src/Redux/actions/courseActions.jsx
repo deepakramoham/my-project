@@ -15,10 +15,11 @@ export const getAllCourses = (controller) => async (dispatch) => {
   } catch (err) {
     if (err.name === "AbortError") {
       console.log("Request was successfully cancelled");
-    } else {
-      console.error("An actual network error occurred:", err);
     }
-    dispatch({ type: "GET_ALL_COURSES_FAILED", payload: err });
+    dispatch({
+      type: "GET_ALL_COURSES_FAILED",
+      payload: err.message,
+    });
   }
 };
 export const postCourseData = (courseData) => async (dispatch) => {
