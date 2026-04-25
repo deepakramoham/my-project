@@ -1,18 +1,17 @@
-import store from "./redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(store.getState().count);
-  store.subscribe(() => {
-    setCount(store.getState().count);
-  });
+  const count = useSelector((state) => state.count);
+
+  const dispatch = useDispatch();
 
   const handleIncrement = () => {
-    store.dispatch({ type: "Increment" });
+    dispatch({ type: "Increment" });
   };
 
   const handleDecrement = () => {
-    store.dispatch({ type: "Decrement" });
+    dispatch({ type: "Decrement" });
   };
 
   return (
