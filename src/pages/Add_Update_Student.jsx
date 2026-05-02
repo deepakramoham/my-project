@@ -152,7 +152,9 @@ const Add_Update_Student = () => {
   const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {
-        dispatch(updateStudentData(studentId, formValues));
+        dispatch(
+          updateStudentData({ studentId: studentId, studentData: formValues }),
+        );
       } else {
         dispatch(postStudentData(formValues));
       }

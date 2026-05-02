@@ -3,16 +3,19 @@ import { useSelector, useDispatch } from "react-redux";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
-import { deleteStudent, getAllStudents } from "../Redux/actions/studentActions";
+import {
+  deleteStudentData,
+  getAllStudents,
+} from "../Redux/actions/studentActions";
 import { getAllCourses } from "../Redux/actions/courseActions";
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
 
-  const { students, loading, onload } = useSelector(
+  const { students, loading, onload, error } = useSelector(
     (state) => state.studentState,
   );
-
+  console.log(students, loading, onload, error);
   const { courses, onload: courseOnload } = useSelector(
     (state) => state.courseState,
   );
@@ -45,26 +48,29 @@ const ManageStudents = () => {
   };
 
   const formattedData = useMemo(() => {
-    return students?.map((student, index) => {
-      const matchedCourse = courses?.find(
-        (course) => course.id === student.course,
-      );
+    return (
+      Array.isArray(students) &&
+      students?.map((student, index) => {
+        const matchedCourse = courses?.find(
+          (course) => course.id === student.course,
+        );
 
-      return {
-        ...student,
-        slNo: index + 1,
-        skills: Array.isArray(student?.skills)
-          ? student?.skills.join(", ")
-          : "",
-        course: matchedCourse ? matchedCourse.courseTitle : "",
-      };
-    });
+        return {
+          ...student,
+          slNo: index + 1,
+          skills: Array.isArray(student?.skills)
+            ? student?.skills.join(", ")
+            : "",
+          course: matchedCourse ? matchedCourse.courseTitle : "",
+        };
+      })
+    );
   }, [students, courses]);
 
   const handleDelete = (id) => {
     const result = confirm("Are you sure you want to delete this?");
     if (result) {
-      dispatch(deleteStudent(id));
+      dispatch(deleteStudentData(id));
     }
   };
 
@@ -107,7 +113,7 @@ const ManageStudents = () => {
       <Table
         loading={loading}
         tableColumns={columnData}
-        data={formattedData}
+        data={formattedData || []}
         onAddClick={handleAdd}
       />
     </>
