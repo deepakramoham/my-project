@@ -1,13 +1,13 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Table from "../components/Table";
+import Table from "../../components/Table";
 import { useNavigate } from "react-router-dom";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 import {
   deleteStudentData,
   getAllStudents,
-} from "../Redux/actions/studentActions";
-import { getAllCourses } from "../Redux/actions/courseActions";
+} from "./studentActions";
+import { getAllCourses } from "../../Redux/actions/courseActions";
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
@@ -38,9 +38,15 @@ const ManageStudents = () => {
     // if (!courseOnload) {
     //   dispatch(getAllCourses());
     // }
+
+    let promise;
     if (!onload) {
-      dispatch(getAllStudents());
+      promise = dispatch(getAllStudents());
     }
+
+    return () => {
+      promise?.abort();
+    };
   }, [dispatch, onload]);
 
   const handleEdit = (editStudent) => {

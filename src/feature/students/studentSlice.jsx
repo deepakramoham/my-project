@@ -4,7 +4,7 @@ import {
   postStudentData,
   updateStudentData,
   deleteStudentData,
-} from "../actions/studentActions";
+} from "./studentActions";
 
 const initialState = {
   onload: false,
@@ -28,7 +28,7 @@ const studentSlice = createSlice({
         state.onload = true;
       })
       .addCase(getAllStudents.rejected, (state, action) => {
-        console.log(action)
+        console.log(action);
         state.loading = false;
         state.error = action.error;
       })

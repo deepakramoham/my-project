@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import DashBoard from "../pages/DashBoard";
-import ManageStudents from "../pages/ManageStudents";
-import Add_Update_Student from "../pages/Add_Update_Student";
+import ManageStudents from "../feature/students/ManageStudents";
+import Add_Update_Student from "../feature/students/Add_Update_Student";
 import ManageCourses from "../pages/ManageCourses";
 import RouteError from "../pages/RouteError";
 

@@ -1,7 +1,7 @@
-import Input from "../components/Input";
-import RadioButton from "../components/RadioButton";
-import CheckBox from "../components/CheckBox";
-import Dropdown from "../components/Dropdown";
+import Input from "../../components/Input";
+import RadioButton from "../../components/RadioButton";
+import CheckBox from "../../components/CheckBox";
+import Dropdown from "../../components/Dropdown";
 
 // import { useState, useRef, useEffect, useContext, useCallback } from "react";
 // import { AppContext } from "../context/AppContextProvider";
@@ -13,8 +13,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   postStudentData,
   updateStudentData,
-} from "../Redux/actions/studentActions";
-import { getAllCourses } from "../Redux/actions/courseActions";
+} from "./studentActions";
+import { getAllCourses } from "../../Redux/actions/courseActions";
 
 const Add_Update_Student = () => {
   const nameRef = useRef(null);

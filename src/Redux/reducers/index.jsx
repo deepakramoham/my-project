@@ -1,5 +1,5 @@
 // import studentReducer from "./studentReducer";
-import studentReducer from "../slices/studentSlice";
+import studentReducer from "../../feature/students/studentSlice";
 import courseReducer from "./courseReducer";
 
 const rootReducer = {
