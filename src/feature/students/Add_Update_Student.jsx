@@ -14,7 +14,7 @@ import {
   postStudentData,
   updateStudentData,
 } from "./studentActions";
-import { getAllCourses } from "../../Redux/actions/courseActions";
+import { getAllCourses } from "../courses/courseActions";
 
 const Add_Update_Student = () => {
   const nameRef = useRef(null);

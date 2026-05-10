@@ -3,7 +3,7 @@ import App from "../App";
 import DashBoard from "../pages/DashBoard";
 import ManageStudents from "../feature/students/ManageStudents";
 import Add_Update_Student from "../feature/students/Add_Update_Student";
-import ManageCourses from "../pages/ManageCourses";
+import ManageCourses from "../feature/courses/ManageCourses";
 import RouteError from "../pages/RouteError";
 
 const router = createBrowserRouter([

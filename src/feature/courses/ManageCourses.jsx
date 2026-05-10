@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import Input from "../components/Input";
-import Modal from "../components/Modal";
-import RadioButton from "../components/RadioButton";
-import Table from "../components/Table";
+import Input from "../../components/Input";
+import Modal from "../../components/Modal";
+import RadioButton from "../../components/RadioButton";
+import Table from "../../components/Table";
 import { useSelector, useDispatch } from "react-redux";
 
 //import { selectAllCourses } from "../Redux/reducers/courseReducer";
@@ -11,7 +11,7 @@ import {
   postCourseData,
   updateCourse,
   deleteCourse,
-} from "../Redux/actions/courseActions";
+} from "./courseActions";
 
 const ManageCourses = () => {
   const nameRef = useRef(null);
@@ -34,16 +34,26 @@ const ManageCourses = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    if (!onload) {
-      dispatch(getAllCourses(controller));
-    }
-    return () => {
-      controller.abort();
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   if (!onload) {
+  //     dispatch(getAllCourses(controller));
+  //   }
+  //   return () => {
+  //     controller.abort();
+  //   };
+  // }, [dispatch]);
+useEffect(() => {
+  let promise;
 
+  if (!onload) {
+    promise = dispatch(getAllCourses());
+  }
+
+  return () => {
+    promise?.abort();
+  };
+}, [dispatch, onload]);
   useEffect(() => {
     const formattedData = courses?.map((course, index) => ({
       ...course,
@@ -61,9 +71,7 @@ const ManageCourses = () => {
     setFormValues(updatedCourse);
   };
 
-  //const handleDelete = (id) => {
-  //dispatch({ type: "DELETE_COURSE", payload: id });
-  //};
+
   const handleDelete = (id) => {
     dispatch(deleteCourse(id));
   };
@@ -120,21 +128,7 @@ const ManageCourses = () => {
     return Object.keys(errors).length === 0;
   };
 
-  /* const handleSubmit = () => {
-    if (validateFormValues()) {
-      if (formValues.id) {
-        dispatch({ type: "UPDATE_COURSE", payload: formValues });
-      } else {
-        const newCourse = {
-          id: crypto.randomUUID(),
-          ...formValues,
-        };
-        dispatch({ type: "SET_COURSE", payload: newCourse });
-      }
-
-      resetStates();
-    }
-  };*/
+ 
   const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {

@@ -3,12 +3,13 @@
     {
       "id": "d42488c3-321d-4a2c-a1e7-317b21322b2f",
       "name": "Uma",
-      "contact": "9900990011",
+      "contact": "9495616332",
       "gender": "female",
       "skills": [
-        "css"
+        "css",
+        "html"
       ],
-      "course": "abf04cd9-f02e-43ef-a9d9-1c725d2f845b"
+      "course": "0c8e84ca-6607-46d6-baa2-457ad06a1ebf"
     },
     {
       "id": "71225bf1-d0e6-4489-971f-473579200800",
@@ -32,12 +33,13 @@
     {
       "id": "db120242-f322-41cf-b7eb-8c0ad2a24eca",
       "courseTitle": "CSS",
-      "paidCourse": "no"
+      "paidCourse": "yes"
     },
     {
-      "id": "abf04cd9-f02e-43ef-a9d9-1c725d2f845b",
+      "id": "Jlpny-8cbVs",
       "courseTitle": "HTML",
-      "paidCourse": "no"
+      "paidCourse": "yes"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

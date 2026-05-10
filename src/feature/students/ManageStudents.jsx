@@ -7,8 +7,8 @@ import {
   deleteStudentData,
   getAllStudents,
 } from "./studentActions";
-import { getAllCourses } from "../../Redux/actions/courseActions";
-
+//import { getAllCourses } from "../../Redux/actions/courseActions";
+import { getAllCourses } from "../courses/courseActions";
 const ManageStudents = () => {
   const dispatch = useDispatch();
 
@@ -23,17 +23,27 @@ const ManageStudents = () => {
   const navigate = useNavigate();
   // const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    if (!courseOnload) {
-      dispatch(getAllCourses(controller));
-    }
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   if (!courseOnload) {
+  //     dispatch(getAllCourses(controller));
+  //   }
 
-    return () => {
-      controller.abort();
-    };
-  }, [dispatch, courseOnload]);
+  //   return () => {
+  //     controller.abort();
+  //   };
+  // }, [dispatch, courseOnload]);
+useEffect(() => {
+  let promise;
 
+  if (!onload) {
+    promise = dispatch(getAllCourses());
+  }
+
+  return () => {
+    promise?.abort();
+  };
+}, [dispatch, onload]);
   useEffect(() => {
     // if (!courseOnload) {
     //   dispatch(getAllCourses());
