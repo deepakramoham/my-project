@@ -10,11 +10,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  postStudentData,
-  updateStudentData,
-} from "./studentActions";
+import { postStudentData, updateStudentData } from "./studentActions";
 import { getAllCourses } from "../courses/courseActions";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const Add_Update_Student = () => {
   const nameRef = useRef(null);
@@ -34,7 +32,7 @@ const Add_Update_Student = () => {
     if (!onload) {
       dispatch(getAllCourses());
     }
-  }, [dispatch,onload]);
+  }, [dispatch, onload]);
 
   useEffect(() => {
     nameRef?.current?.focus();
@@ -47,7 +45,7 @@ const Add_Update_Student = () => {
       );
 
       if (studentToEdit) {
-        setFormValues(studentToEdit);
+        setFormValues({ ...studentToEdit, course: studentToEdit?.course?.id });
       }
     }
   }, [studentId, students]);
@@ -55,10 +53,13 @@ const Add_Update_Student = () => {
   const [formValues, setFormValues] = useState({
     name: "",
     contact: "",
+    course: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [courseOptions, setCourseOptions] = useState([]);
+
+  console.log(formValues);
 
   useEffect(() => {
     const options = courses?.map((course) => ({
@@ -194,13 +195,12 @@ const Add_Update_Student = () => {
 
         <div>
           <RadioButton
-            label="Gender"
-            name={"gender"}
-            selectedValue={formValues?.gender || ""}
+            label="Education"
+            name={"education"}
+            selectedValue={formValues?.education || ""}
             options={[
-              { label: "Male", value: "male" },
-              { label: "Female", value: "female" },
-              { label: "Other", value: "other" },
+              { label: "Tech", value: "tech" },
+              { label: "Non-Tech", value: "non-tech" },
             ]}
             handleInputChange={handleInputChange}
           />
@@ -208,13 +208,14 @@ const Add_Update_Student = () => {
 
         <div className="mb-2">
           <CheckBox
-            name={"skills"}
-            label={"Skills"}
-            selectedValues={formValues?.skills || []}
+            name={"timeSlots"}
+            label={"Time Slots"}
+            selectedValues={formValues?.timeSlots || []}
             options={[
-              { label: "HTML", value: "html" },
-              { label: "CSS", value: "css" },
-              { label: "Javascript", value: "javascript" },
+              { label: "Morning", value: "morning" },
+              { label: "Afternoon", value: "afternoon" },
+              { label: "Evening", value: "evening" },
+              { label: "Weekend", value: "weekend" },
             ]}
             handleInputChange={handleInputChange}
           />

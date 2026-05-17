@@ -3,10 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Table from "../../components/Table";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
-import {
-  deleteStudentData,
-  getAllStudents,
-} from "./studentActions";
+import { deleteStudentData, getAllStudents } from "./studentActions";
 //import { getAllCourses } from "../../Redux/actions/courseActions";
 import { getAllCourses } from "../courses/courseActions";
 const ManageStudents = () => {
@@ -33,17 +30,19 @@ const ManageStudents = () => {
   //     controller.abort();
   //   };
   // }, [dispatch, courseOnload]);
-useEffect(() => {
-  let promise;
 
-  if (!onload) {
-    promise = dispatch(getAllCourses());
-  }
+  useEffect(() => {
+    let promise;
 
-  return () => {
-    promise?.abort();
-  };
-}, [dispatch, onload]);
+    if (!onload) {
+      promise = dispatch(getAllCourses());
+    }
+
+    return () => {
+      promise?.abort();
+    };
+  }, [dispatch, onload]);
+
   useEffect(() => {
     // if (!courseOnload) {
     //   dispatch(getAllCourses());
@@ -67,17 +66,13 @@ useEffect(() => {
     return (
       Array.isArray(students) &&
       students?.map((student, index) => {
-        const matchedCourse = courses?.find(
-          (course) => course.id === student.course,
-        );
-
         return {
           ...student,
           slNo: index + 1,
-          skills: Array.isArray(student?.skills)
-            ? student?.skills.join(", ")
+          timeSlots: Array.isArray(student?.timeSlots)
+            ? student?.timeSlots.join(", ")
             : "",
-          course: matchedCourse ? matchedCourse.courseTitle : "",
+          course: student?.course?.courseTitle,
         };
       })
     );
@@ -98,8 +93,8 @@ useEffect(() => {
     { header: "Sl. NO", accessor: "slNo" },
     { header: "Name", accessor: "name" },
     { header: "Contact", accessor: "contact" },
-    { header: "Gender", accessor: "gender" },
-    { header: "Skills", accessor: "skills" },
+    { header: "Education", accessor: "education" },
+    { header: "Time Slots", accessor: "timeSlots" },
     { header: "Course", accessor: "course" },
     {
       header: "Action",

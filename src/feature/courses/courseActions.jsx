@@ -11,13 +11,10 @@ export const getAllCourses = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.message || "Something went wrong"
-      );
+      return rejectWithValue(error.message || "Something went wrong");
     }
-  }
+  },
 );
-
 
 export const postCourseData = createAsyncThunk(
   "course/postCourseData",
@@ -26,7 +23,7 @@ export const postCourseData = createAsyncThunk(
 
     console.log(response);
 
-    return response.data;
+    return response?.data?.newCourse;
   },
 );
 
@@ -38,16 +35,16 @@ export const updateCourse = createAsyncThunk(
       courseData,
     );
 
-    return response.data;
+    return response?.data?.course;
   },
 );
 
 export const deleteCourse = createAsyncThunk(
   "course/deleteCourse",
   async (id) => {
-    await apiClient.delete(`/courses/${id}`);
-
-    return id;
+    const response = await apiClient.delete(`/courses/${id}`);
+    console.log(response);
+    return response?.data?.deletedId;
   },
 );
 // export const getAllCourses = (controller) => async (dispatch) => {

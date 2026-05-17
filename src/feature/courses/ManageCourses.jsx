@@ -43,17 +43,17 @@ const ManageCourses = () => {
   //     controller.abort();
   //   };
   // }, [dispatch]);
-useEffect(() => {
-  let promise;
+  useEffect(() => {
+    let promise;
 
-  if (!onload) {
-    promise = dispatch(getAllCourses());
-  }
+    if (!onload) {
+      promise = dispatch(getAllCourses());
+    }
 
-  return () => {
-    promise?.abort();
-  };
-}, [dispatch, onload]);
+    return () => {
+      promise?.abort();
+    };
+  }, [dispatch, onload]);
   useEffect(() => {
     const formattedData = courses?.map((course, index) => ({
       ...course,
@@ -71,9 +71,11 @@ useEffect(() => {
     setFormValues(updatedCourse);
   };
 
-
   const handleDelete = (id) => {
-    dispatch(deleteCourse(id));
+    const result = confirm("Are you sure you want to delete this?");
+    if (result) {
+      dispatch(deleteCourse(id));
+    }
   };
 
   useEffect(() => {
@@ -128,7 +130,6 @@ useEffect(() => {
     return Object.keys(errors).length === 0;
   };
 
- 
   const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {

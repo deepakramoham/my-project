@@ -20,7 +20,7 @@ export const postStudentData = createAsyncThunk(
   async (data) => {
     const response = await apiClient.post("/students", data);
     console.log(response);
-    return response.data;
+    return response?.data?.student;
   },
 );
 
@@ -29,14 +29,13 @@ export const updateStudentData = createAsyncThunk(
   async ({ studentId, studentData }, thunkAPI) => {
     const response = await apiClient.put(`/students/${studentId}`, studentData);
 
-    return response.data;
+    return response?.data?.student;
   },
 );
 export const deleteStudentData = createAsyncThunk(
   "student/deleteStudentData",
   async (id) => {
     const response = await apiClient.delete(`/students/${id}`);
-    console.log(response);
-    return id;
+    return response?.data?.deletedId;
   },
 );
