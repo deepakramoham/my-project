@@ -17,8 +17,8 @@ const ManageCourses = () => {
   const nameRef = useRef(null);
 
   const dispatch = useDispatch();
-  const { courses, onload } = useSelector((state) => state.courseState);
-
+  const { courses, onload, error } = useSelector((state) => state.courseState);
+  console.log(error);
   /*   const [formValues, setFormValues] = useState({
     name: "",
     contact: "",

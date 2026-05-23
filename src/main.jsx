@@ -7,12 +7,15 @@ import { RouterProvider } from "react-router-dom";
 import router from "./AppRoutes/Routes.jsx";
 import store from "./Redux/store.jsx";
 import { Provider } from "react-redux";
+
+export const getStore = () => store;
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-   <Provider store={store}>
-  <AppContextProvider>
-    <RouterProvider router={router} />
-  </AppContextProvider>,
-  </Provider>
+  <Provider store={store}>
+    <AppContextProvider>
+      <RouterProvider router={router} />
+    </AppContextProvider>
+    ,
+  </Provider>,
   // </StrictMode>
 );

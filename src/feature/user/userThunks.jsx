@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import apiClient from "../../services/apiClient";
 
+console.log("hi user thunks");
 export const register = createAsyncThunk("user/register", async (userData) => {
   const response = await apiClient.post("/register", userData);
   return response?.data;

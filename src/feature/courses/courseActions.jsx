@@ -6,7 +6,6 @@ export const getAllCourses = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
-
       const response = await apiClient.get("/courses");
 
       return response.data;
