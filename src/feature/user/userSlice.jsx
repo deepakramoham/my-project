@@ -1,0 +1,41 @@
+import { createSlice } from "@reduxjs/toolkit";
+import { register, login } from "./userThunks";
+
+const initialState = {
+  loading: false,
+  error: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
+};
+
+const userSlice = createSlice({
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        // state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      })
+      .addCase(login.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      });
+  },
+});
+
+export default userSlice.reducer;

@@ -5,8 +5,22 @@ import ManageStudents from "../feature/students/ManageStudents";
 import Add_Update_Student from "../feature/students/Add_Update_Student";
 import ManageCourses from "../feature/courses/ManageCourses";
 import RouteError from "../pages/RouteError";
+import SignUp from "../feature/user/SignUp";
+import SignIn from "../feature/user/SignIn";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SignIn />,
+  },
+  {
+    path: "/sign-in",
+    element: <SignIn />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUp />,
+  },
   {
     path: "/",
     element: <App />,
@@ -16,18 +30,6 @@ const router = createBrowserRouter([
       {
         path: "/students",
         element: <ManageStudents />,
-        // loader: async () => {
-        //   const response = await fetch(
-        //     "https://jsonplaceholder.typicode.com/users",
-        //   );
-        //   const users = await response.json();
-        //   const modifiedUsers = users?.map((user) => ({
-        //     id: user?.id,
-        //     name: user?.name,
-        //   }));
-
-        //   return { users: modifiedUsers };
-        // },
       },
       { path: "/students/add-student", element: <Add_Update_Student /> },
       { path: "/students/update-student", element: <Add_Update_Student /> },
