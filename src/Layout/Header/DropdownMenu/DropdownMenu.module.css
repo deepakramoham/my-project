@@ -1,0 +1,5 @@
+.menu-options:hover {
+  cursor: pointer;
+  color: white;
+  background-color: rgb(10, 110, 253);
+}
