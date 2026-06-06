@@ -19,7 +19,7 @@ export const postStudentData = createAsyncThunk(
   "student/postStudentData",
   async (data) => {
     const response = await apiClient.post("/students", data);
-    console.log(response);
+   
     return response?.data?.student;
   },
 );

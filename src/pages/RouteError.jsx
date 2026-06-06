@@ -2,7 +2,7 @@ import { useRouteError } from "react-router-dom";
 
 const RouteError = () => {
   const error = useRouteError();
-  console.log(error);
+
   return (
     <div className="min-vh-100">
       <div className="d-flex justify-content-center align-items-center">

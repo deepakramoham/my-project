@@ -28,7 +28,6 @@ const studentSlice = createSlice({
         state.onload = true;
       })
       .addCase(getAllStudents.rejected, (state, action) => {
-        console.log(action);
         state.loading = false;
         state.error = action.error;
       })

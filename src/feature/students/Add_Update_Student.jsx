@@ -59,7 +59,7 @@ const Add_Update_Student = () => {
   const [formErrors, setFormErrors] = useState({});
   const [courseOptions, setCourseOptions] = useState([]);
 
-  console.log(formValues);
+  
 
   useEffect(() => {
     const options = courses?.map((course) => ({

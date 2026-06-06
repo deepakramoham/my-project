@@ -1,7 +1,9 @@
 import axios from "axios";
 import { getStore } from "../main";
 
-const BASE_URL = "http://localhost:3500";
+// const URL = "https://coursemaster-backend-9wxk.onrender.com/";
+
+const BASE_URL ="http://localhost:3500"
 const apiClient = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
@@ -13,7 +15,7 @@ apiClient.interceptors.request.use(
     if (token) {
       request.headers.Authorization = `Bearer ${token}`;
     }
-    console.log(request);
+
     return request;
   },
   (error) => Promise.reject(error),
@@ -21,7 +23,6 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response) => {
-    console.log(response);
     return response;
   },
   (error) => {

@@ -20,7 +20,7 @@ export const postCourseData = createAsyncThunk(
   async (courseData) => {
     const response = await apiClient.post("/courses", courseData);
 
-    console.log(response);
+  
 
     return response?.data?.newCourse;
   },
@@ -42,7 +42,7 @@ export const deleteCourse = createAsyncThunk(
   "course/deleteCourse",
   async (id) => {
     const response = await apiClient.delete(`/courses/${id}`);
-    console.log(response);
+  
     return response?.data?.deletedId;
   },
 );

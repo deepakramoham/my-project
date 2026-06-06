@@ -12,7 +12,7 @@ const ManageStudents = () => {
   const { students, loading, onload, error } = useSelector(
     (state) => state.studentState,
   );
-  console.log(students, loading, onload, error);
+ 
   const { courses, onload: courseOnload } = useSelector(
     (state) => state.courseState,
   );

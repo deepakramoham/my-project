@@ -12,7 +12,6 @@ const SignIn = () => {
   const [formErrors, setFormErrors] = useState({});
 
   const { user, error, loading } = useSelector((state) => state.userState);
-  console.log(user);
 
   useEffect(() => {
     if (user && !error) {
