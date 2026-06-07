@@ -7,7 +7,7 @@ import ManageCourses from "../feature/courses/ManageCourses";
 import RouteError from "../pages/RouteError";
 import SignUp from "../feature/user/SignUp";
 import SignIn from "../feature/user/SignIn";
-
+import SessionOut from "../pages/SessionOut";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <SignUp />,
+  },
+  {
+    path: "/session-expired",
+    element: <SessionOut />,
   },
   {
     path: "/",

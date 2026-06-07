@@ -11,25 +11,35 @@ const useTokenValidation = (accessToken) => {
   const { decodedToken, isExpired } = useJwt(accessToken);
 
   useEffect(() => {
-    if (!accessToken || !decodedToken) return;
+    if (!accessToken || !decodedToken) {
+      return;
+    }
 
     const onExpire = () => {
       dispatch(signOut());
       localStorage.removeItem("user");
-      navigate("/sign-in");
+      navigate("/session-expired");
     };
+
+    // if (isExpired) {
+    //   onExpire();
+    // }
+
+    console.log("isExpired", isExpired);
 
     if (decodedToken?.exp && decodedToken?.iat && !isExpired) {
-      const timeOut = decodedToken?.exp - decodedToken?.iat;
+      const timeOut = decodedToken.exp - decodedToken.iat;
 
-      timerId = setTimeout(() => {
+      console.log("Creating timer for", timeOut, "seconds");
+
+      const timerId = setTimeout(() => {
         onExpire();
       }, timeOut * 1000);
-    }
 
-    return () => {
-      clearTimeout(timerId);
-    };
+      return () => {
+        clearTimeout(timerId);
+      };
+    }
   }, [accessToken, decodedToken, isExpired]);
 };
 
