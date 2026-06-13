@@ -1,10 +1,14 @@
 import styles from "../Layout.module.css";
 import { NavLink, Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const location = useLocation();
-  const selectedMenu = location.pathname.split("/").pop();
+  // const selectedMenu = location.pathname.split("/").pop();
+
+  const { role } = useSelector((state) => state?.userState?.user);
+  console.log(role);
   return (
     <>
       <aside className={styles.sidebar}>
@@ -20,37 +24,55 @@ const Sidebar = () => {
 
           <hr />
           <ul className="nav nav-pills flex-column mb-auto ">
-            <li className="nav-item">
-              <NavLink
-                className={({ isActive }) =>
-                  `nav-link text-white ${isActive ? "active" : ""} `
-                }
-                // className={`nav-link text-white ${selectedMenu === "dashboard" ? "active" : ""} `}
-                to="/dashboard"
-              >
-                Dashboard
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className={({ isActive }) =>
-                  `nav-link text-white ${isActive ? "active" : ""} `
-                }
-                to="/students"
-              >
-                Students
-              </NavLink>
-            </li>
-            <li className="nav-item ">
-              <NavLink
-                className={({ isActive }) =>
-                  `nav-link text-white ${isActive ? "active" : ""} `
-                }
-                to="/courses"
-              >
-                Courses
-              </NavLink>
-            </li>
+            {role === 1100 ? (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link text-white ${isActive ? "active" : ""} `
+                    }
+                    // className={`nav-link text-white ${selectedMenu === "dashboard" ? "active" : ""} `}
+                    to="/app/admin"
+                    end
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link text-white ${isActive ? "active" : ""} `
+                    }
+                    to="/app/admin/students"
+                  >
+                    Students
+                  </NavLink>
+                </li>
+                <li className="nav-item ">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link text-white ${isActive ? "active" : ""} `
+                    }
+                    to="/app/admin/courses"
+                  >
+                    Courses
+                  </NavLink>
+                </li>
+              </>
+            ) : role === 1000 ? (
+              <li className="nav-item ">
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link text-white ${isActive ? "active" : ""} `
+                  }
+                  to="/app/user/dashboard"
+                >
+                  Dashboard
+                </NavLink>
+              </li>
+            ) : (
+              <></>
+            )}
           </ul>
         </div>
       </aside>

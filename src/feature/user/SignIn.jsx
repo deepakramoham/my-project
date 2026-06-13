@@ -16,7 +16,9 @@ const SignIn = () => {
   useEffect(() => {
     if (user && !error) {
       if (user?.role === 1100) {
-        navigate("/dashboard");
+        navigate("/app/admin");
+      } else if (user?.role === 1000) {
+        navigate("/app/user/dashboard");
       }
     }
   }, [user]);
@@ -119,7 +121,7 @@ const SignIn = () => {
             Sign In
           </button>
 
-          {false && <Loading />}
+          {loading && <Loading />}
         </div>
       </div>
     </div>

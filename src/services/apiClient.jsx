@@ -1,9 +1,7 @@
 import axios from "axios";
 import { getStore } from "../main";
 
-// const URL = "https://coursemaster-backend-9wxk.onrender.com/";
-
-const BASE_URL ="http://localhost:3500"
+const BASE_URL = "https://coursemaster-backend-9wxk.onrender.com/";
 const apiClient = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,

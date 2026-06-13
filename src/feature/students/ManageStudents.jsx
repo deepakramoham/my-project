@@ -6,6 +6,8 @@ import Loading from "../../components/Loading";
 import { deleteStudentData, getAllStudents } from "./studentActions";
 //import { getAllCourses } from "../../Redux/actions/courseActions";
 import { getAllCourses } from "../courses/courseActions";
+import Unauthorized from "../../pages/Unauthorized";
+
 const ManageStudents = () => {
   const dispatch = useDispatch();
 
