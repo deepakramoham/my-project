@@ -10,28 +10,36 @@ import SignIn from "../feature/user/SignIn";
 import SessionOut from "../pages/SessionOut";
 import Unauthorized from "../pages/Unauthorized";
 import RouteProtector from "./RouteProtector";
+import ErrorBoundaryWrapperRoute from "./ErrorBoundaryWrapperRoute";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SignIn />,
-    errorElement: <RouteError />,
+    element: <ErrorBoundaryWrapperRoute />,
+    children: [
+      {
+        index: true,
+        element: <SignIn />,
+        errorElement: <RouteError />,
+      },
+      {
+        path: "/sign-in",
+        element: <SignIn />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp />,
+      },
+      {
+        path: "/session-expired",
+        element: <SessionOut />,
+      },
+      {
+        path: "/unauthorized",
+        element: <Unauthorized />,
+      },
+    ],
   },
-  {
-    path: "/sign-in",
-    element: <SignIn />,
-  },
-  {
-    path: "/sign-up",
-    element: <SignUp />,
-  },
-  {
-    path: "/session-expired",
-    element: <SessionOut />,
-  },
-  {
-    path: "/unauthorized",
-    element: <Unauthorized />,
-  },
+
   {
     path: "/app",
     element: <App />,
@@ -40,7 +48,10 @@ const router = createBrowserRouter([
         path: "/app/admin",
         element: <RouteProtector role={1100} />,
         children: [
-          { index: true, element: <DashBoard /> },
+          {
+            index: true,
+            element: <DashBoard />,
+          },
           {
             path: "/app/admin/dashboard",
             element: <DashBoard />,
@@ -64,6 +75,7 @@ const router = createBrowserRouter([
         path: "/app/user",
         element: <RouteProtector role={1000} />,
         children: [
+          { index: true, element: <div>user Dashboard</div> },
           { path: "/app/user/dashboard", element: <div>user Dashboard</div> },
         ],
       },

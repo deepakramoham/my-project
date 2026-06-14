@@ -16,7 +16,7 @@ const SignIn = () => {
   useEffect(() => {
     if (user && !error) {
       if (user?.role === 1100) {
-        navigate("/app/admin");
+        navigate("/app/admin/dashboard");
       } else if (user?.role === 1000) {
         navigate("/app/user/dashboard");
       }

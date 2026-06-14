@@ -32,7 +32,7 @@ const Sidebar = () => {
                       `nav-link text-white ${isActive ? "active" : ""} `
                     }
                     // className={`nav-link text-white ${selectedMenu === "dashboard" ? "active" : ""} `}
-                    to="/app/admin"
+                    to="/app/admin/dashboard"
                     end
                   >
                     Dashboard

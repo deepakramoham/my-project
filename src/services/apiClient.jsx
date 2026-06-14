@@ -4,7 +4,7 @@ import { getStore } from "../main";
 const BASE_URL = "https://coursemaster-backend-9wxk.onrender.com/";
 const apiClient = axios.create({
   baseURL: BASE_URL,
-  timeout: 10000,
+  timeout: 100000,
 });
 
 apiClient.interceptors.request.use(
