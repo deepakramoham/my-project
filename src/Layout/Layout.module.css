@@ -10,9 +10,9 @@
   grid-template-columns: minmax(200px, 1fr) 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-auto-rows: auto 1fr auto;
   grid-template-areas:
-    "sb hd hd hd hd hd hd"
-    "sb mn mn mn mn mn mn"
-    "sb mn mn mn mn mn mn";
+    "hd hd hd hd hd hd hd"
+    "mn mn mn mn mn mn mn"
+    "mn mn mn mn mn mn mn";
 }
 
 .header {
@@ -23,11 +23,52 @@
 
 .sidebar {
   grid-area: sb;
+  position: fixed;
+  transform: translate(-100%);
+  transition: transform 0.5s ease;
   min-height: 100vh;
+  z-index: 10;
 }
 
 .main {
   grid-area: mn;
 
   padding: 0.75em;
+}
+
+.hamburger-container {
+  position: fixed;
+  left: 5px;
+}
+
+.active {
+  position: fixed;
+  transform: translate(0);
+  transition: transform 0.5s ease;
+  z-index: 10;
+}
+
+@media screen and (min-width: 650px) {
+  .container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(200px, 1fr) 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-auto-rows: auto 1fr auto;
+    grid-template-areas:
+      "sb hd hd hd hd hd hd"
+      "sb mn mn mn mn mn mn"
+      "sb mn mn mn mn mn mn";
+  }
+
+  .sidebar {
+    grid-area: sb;
+    position: relative;
+    transform: translate(0);
+    transition: transform 0.5s ease;
+  }
+
+  .hamburger-container {
+    position: fixed;
+    left: -1000px;
+  }
 }

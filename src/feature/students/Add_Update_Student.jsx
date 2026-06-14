@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { postStudentData, updateStudentData } from "./studentActions";
 import { getAllCourses } from "../courses/courseActions";
-import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const Add_Update_Student = () => {
   const nameRef = useRef(null);

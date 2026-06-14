@@ -61,7 +61,7 @@ const ManageStudents = () => {
   }, [dispatch, onload]);
 
   const handleEdit = (editStudent) => {
-    navigate(`/students/update-student?id=${editStudent?.id}`);
+    navigate(`/app/admin/students/update-student?id=${editStudent?.id}`);
   };
 
   const formattedData = useMemo(() => {
@@ -88,7 +88,7 @@ const ManageStudents = () => {
   };
 
   const handleAdd = () => {
-    navigate("/students/add-student");
+    navigate("/app/admin/students/add-student");
   };
 
   const columnData = [

@@ -25,12 +25,11 @@ const useTokenValidation = (accessToken) => {
     //   onExpire();
     // }
 
-    console.log("isExpired", isExpired);
 
     if (decodedToken?.exp && decodedToken?.iat && !isExpired) {
       const timeOut = decodedToken.exp - decodedToken.iat;
 
-      console.log("Creating timer for", timeOut, "seconds");
+   
 
       const timerId = setTimeout(() => {
         onExpire();

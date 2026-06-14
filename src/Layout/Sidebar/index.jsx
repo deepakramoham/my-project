@@ -3,15 +3,18 @@ import { NavLink, Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Sidebar = () => {
+const Sidebar = ({ sideBarRef, sideBarOpen }) => {
   const location = useLocation();
   // const selectedMenu = location.pathname.split("/").pop();
 
   const { role } = useSelector((state) => state?.userState?.user);
-  console.log(role);
+
   return (
     <>
-      <aside className={styles.sidebar}>
+      <aside
+        ref={sideBarRef}
+        className={`${sideBarOpen ? `${styles.sidebar} ${styles.active}` : `${styles.sidebar}`}`}
+      >
         <div
           className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
           style={{

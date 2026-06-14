@@ -51,39 +51,40 @@ const Table = ({ tableColumns, data, onAddClick, loading }) => {
           </button>
         </div>
       </div>
-
-      <table className="table">
-        <thead>
-          <tr>
-            {tableColumns?.map((col, index) => (
-              <th key={index}>{col.header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {!loading ? (
-            filteredData?.length > 0 ? (
-              filteredData?.map((row, index) => (
-                <tr key={index}>
-                  {tableColumns?.map((col, index) => (
-                    <td key={index}>
-                      {col?.render ? col?.render(row) : row[col.accessor]}
-                    </td>
-                  ))}
+      <div style={{ overflow: "auto" }}>
+        <table className="table">
+          <thead>
+            <tr>
+              {tableColumns?.map((col, index) => (
+                <th key={index}>{col.header}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {!loading ? (
+              filteredData?.length > 0 ? (
+                filteredData?.map((row, index) => (
+                  <tr key={index}>
+                    {tableColumns?.map((col, index) => (
+                      <td key={index}>
+                        {col?.render ? col?.render(row) : row[col.accessor]}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td>No data found</td>
                 </tr>
-              ))
+              )
             ) : (
               <tr>
-                <td>No data found</td>
+                <td>fetching data . . .</td>
               </tr>
-            )
-          ) : (
-            <tr>
-              <td>fetching data . . .</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };
