@@ -4,7 +4,7 @@ import Modal from "../../components/Modal";
 import RadioButton from "../../components/RadioButton";
 import Table from "../../components/Table";
 import { useSelector, useDispatch } from "react-redux";
-
+import { ToastContainer, toast } from "react-toastify";
 //import { selectAllCourses } from "../Redux/reducers/courseReducer";
 import {
   getAllCourses,
@@ -18,6 +18,8 @@ const ManageCourses = () => {
 
   const dispatch = useDispatch();
   const { courses, onload, error } = useSelector((state) => state.courseState);
+
+  console.log(error);
 
   /*   const [formValues, setFormValues] = useState({
     name: "",
@@ -33,6 +35,16 @@ const ManageCourses = () => {
   const [tableData, setTableData] = useState([]);
 
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Something went wrong",
+      );
+    }
+  }, [error]);
 
   // useEffect(() => {
   //   const controller = new AbortController();
@@ -184,6 +196,7 @@ const ManageCourses = () => {
 
   return (
     <>
+      <ToastContainer />
       {modalOpen && (
         <Modal
           modalTitle={"Add Course"}

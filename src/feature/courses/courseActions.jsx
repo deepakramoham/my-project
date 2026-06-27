@@ -17,12 +17,15 @@ export const getAllCourses = createAsyncThunk(
 
 export const postCourseData = createAsyncThunk(
   "course/postCourseData",
-  async (courseData) => {
-    const response = await apiClient.post("/courses", courseData);
-
-  
-
-    return response?.data?.newCourse;
+  async (courseData, { rejectWithValue }) => {
+    try {
+      const response = await apiClient.post("/courses", courseData);
+      if (response?.data?.newCourse) {
+        return response?.data?.newCourse;
+      }
+    } catch (error) {
+      return rejectWithValue(error || "Something went wrong");
+    }
   },
 );
 

@@ -11,6 +11,7 @@ const initialState = {
   loading: false,
   error: null,
   courses: [],
+  status: "idle", //success, failed, loading
 };
 
 const courseSlice = createSlice({
@@ -41,7 +42,7 @@ const courseSlice = createSlice({
       })
       .addCase(postCourseData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error;
+        state.error = action.payload;
       })
 
       .addCase(updateCourse.pending, (state, action) => {

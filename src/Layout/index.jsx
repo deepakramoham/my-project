@@ -8,7 +8,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 const Layout = () => {
   const sideBarRef = useRef(null);
   const [sideBarOpen, setSideBarOpen] = useState(false);
-  console.log(sideBarRef);
+
   const handleClick = ({ target }) => {
     if (!sideBarRef || !sideBarOpen || sideBarRef?.current?.contains(target))
       return;

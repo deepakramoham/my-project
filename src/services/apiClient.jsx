@@ -28,6 +28,8 @@ apiClient.interceptors.response.use(
       localStorage.removeItem("user");
       window.location.href = "/sign-in";
     }
+
+    return Promise.reject(error);
   },
 );
 
