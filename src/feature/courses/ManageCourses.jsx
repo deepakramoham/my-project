@@ -5,6 +5,7 @@ import RadioButton from "../../components/RadioButton";
 import Table from "../../components/Table";
 import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { clearOperationSuccess } from "./courseSlice"; 
 //import { selectAllCourses } from "../Redux/reducers/courseReducer";
 import {
   getAllCourses,
@@ -17,7 +18,7 @@ const ManageCourses = () => {
   const nameRef = useRef(null);
 
   const dispatch = useDispatch();
-  const { courses, onload, error } = useSelector((state) => state.courseState);
+  const { courses, onload, error ,operationSuccess} = useSelector((state) => state.courseState);
 
   console.log(error);
 
@@ -35,7 +36,12 @@ const ManageCourses = () => {
   const [tableData, setTableData] = useState([]);
 
   const [modalOpen, setModalOpen] = useState(false);
-
+useEffect(() => {
+  if (operationSuccess) {
+    resetStates();
+    dispatch(clearOperationSuccess());
+  }
+}, [operationSuccess, dispatch]);
   useEffect(() => {
     if (error) {
       toast.error(
@@ -154,7 +160,7 @@ const ManageCourses = () => {
         dispatch(postCourseData(newCourse));
       }
 
-      resetStates();
+      
     }
   };
   const handleAdd = () => {

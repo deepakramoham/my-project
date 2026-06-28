@@ -11,13 +11,18 @@ const initialState = {
   loading: false,
   error: null,
   courses: [],
-  status: "idle", //success, failed, loading
+  operationSuccess: false,
+ 
 };
 
 const courseSlice = createSlice({
   name: "course",
   initialState,
-  reducers: {},
+  reducers: {
+  clearOperationSuccess: (state) => {
+    state.operationSuccess = false;
+  },
+},
   extraReducers: (builder) => {
     builder
       .addCase(getAllCourses.pending, (state, action) => {
@@ -35,22 +40,26 @@ const courseSlice = createSlice({
 
       .addCase(postCourseData.pending, (state, action) => {
         state.loading = true;
+        state.operationSuccess = false;
       })
       .addCase(postCourseData.fulfilled, (state, action) => {
         state.loading = false;
         state.courses = [action.payload, ...state.courses];
+      state.operationSuccess = true;
       })
       .addCase(postCourseData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.operationSuccess = false;
       })
 
       .addCase(updateCourse.pending, (state, action) => {
         state.loading = true;
+        state.operationSuccess = false;
       })
       .addCase(updateCourse.fulfilled, (state, action) => {
         state.loading = false;
-
+state.operationSuccess = true;
         state.courses = state.courses.map((course) =>
           course.id === action.payload.id ? action.payload : course,
         );
@@ -58,6 +67,7 @@ const courseSlice = createSlice({
       .addCase(updateCourse.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error;
+        state.operationSuccess = false;
       })
 
       .addCase(deleteCourse.pending, (state, action) => {
@@ -78,5 +88,5 @@ const courseSlice = createSlice({
 });
 
 export const selectAllCourses = (state) => state.course.courses;
-
+export const { clearOperationSuccess } = courseSlice.actions;
 export default courseSlice.reducer;
