@@ -24,7 +24,8 @@ export const postCourseData = createAsyncThunk(
         return response?.data?.newCourse;
       }
     } catch (error) {
-      return rejectWithValue(error || "Something went wrong");
+      console.log(error?.response);
+      return rejectWithValue(error?.response?.data?.message || "Something went wrong");
     }
   },
 );
@@ -45,7 +46,7 @@ export const deleteCourse = createAsyncThunk(
   "course/deleteCourse",
   async (id) => {
     const response = await apiClient.delete(`/courses/${id}`);
-  
+
     return response?.data?.deletedId;
   },
 );

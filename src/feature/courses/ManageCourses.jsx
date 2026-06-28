@@ -5,7 +5,7 @@ import RadioButton from "../../components/RadioButton";
 import Table from "../../components/Table";
 import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import { clearOperationSuccess } from "./courseSlice"; 
+import { openModal, closeModal, resetStatus } from "./courseSlice";
 //import { selectAllCourses } from "../Redux/reducers/courseReducer";
 import {
   getAllCourses,
@@ -18,7 +18,9 @@ const ManageCourses = () => {
   const nameRef = useRef(null);
 
   const dispatch = useDispatch();
-  const { courses, onload, error ,operationSuccess} = useSelector((state) => state.courseState);
+  const { courses, onload, error, status, modalOpen } = useSelector(
+    (state) => state.courseState,
+  );
 
   console.log(error);
 
@@ -35,22 +37,24 @@ const ManageCourses = () => {
 
   const [tableData, setTableData] = useState([]);
 
-  const [modalOpen, setModalOpen] = useState(false);
-useEffect(() => {
-  if (operationSuccess) {
-    resetStates();
-    dispatch(clearOperationSuccess());
-  }
-}, [operationSuccess, dispatch]);
   useEffect(() => {
-    if (error) {
-      toast.error(
-        error?.response?.data?.message ||
-          error?.message ||
-          "Something went wrong",
-      );
+    if (status && status === "success") {
+      resetStates();
+      dispatch(resetStatus());
+      // toast.success(
+      //   error?.data?.message ||
+      //     error?.message ||
+      //     "Something went wrong",
+      // );
     }
-  }, [error]);
+  }, [status, dispatch]);
+
+  useEffect(() => {
+    if (error && status === "failed") {
+      toast.error(error || "Something went wrong");
+      dispatch(resetStatus());
+    }
+  }, [error, status]);
 
   // useEffect(() => {
   //   const controller = new AbortController();
@@ -63,11 +67,9 @@ useEffect(() => {
   // }, [dispatch]);
   useEffect(() => {
     let promise;
-
     if (!onload) {
       promise = dispatch(getAllCourses());
     }
-
     return () => {
       promise?.abort();
     };
@@ -82,7 +84,7 @@ useEffect(() => {
   }, [courses]);
 
   const handleEdit = (editCourse) => {
-    setModalOpen(true);
+    dispatch(openModal());
     const updatedCourse = courses?.find(
       (course) => course?.id === editCourse?.id,
     );
@@ -129,7 +131,6 @@ useEffect(() => {
   }, []);
 
   const resetStates = () => {
-    setModalOpen(!modalOpen);
     setFormErrors({});
     setFormValues({
       courseTitle: "",
@@ -159,15 +160,16 @@ useEffect(() => {
         };
         dispatch(postCourseData(newCourse));
       }
-
-      
     }
   };
   const handleAdd = () => {
-    setModalOpen(true);
+    dispatch(openModal());
   };
 
-  const handleClose = () => setModalOpen(!modalOpen);
+  const handleClose = () => {
+    dispatch(closeModal());
+    resetStates();
+  };
 
   const columnData = [
     { header: "Sl. NO", accessor: "slNo" },
