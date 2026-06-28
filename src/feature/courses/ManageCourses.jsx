@@ -4,7 +4,7 @@ import Modal from "../../components/Modal";
 import RadioButton from "../../components/RadioButton";
 import Table from "../../components/Table";
 import { useSelector, useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { openModal, closeModal, resetStatus } from "./courseSlice";
 //import { selectAllCourses } from "../Redux/reducers/courseReducer";
 import {
@@ -204,7 +204,6 @@ const ManageCourses = () => {
 
   return (
     <>
-      <ToastContainer />
       {modalOpen && (
         <Modal
           modalTitle={"Add Course"}
