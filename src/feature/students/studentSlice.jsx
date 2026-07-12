@@ -19,7 +19,7 @@ const studentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllStudents.pending, (state, action) => {
+      .addCase(getAllStudents.pending, (state) => {
         state.loading = true;
       })
       .addCase(getAllStudents.fulfilled, (state, action) => {
@@ -31,7 +31,7 @@ const studentSlice = createSlice({
         state.loading = false;
         state.error = action.error;
       })
-      .addCase(postStudentData.pending, (state, action) => {
+      .addCase(postStudentData.pending, (state) => {
         state.loading = true;
       })
       .addCase(postStudentData.fulfilled, (state, action) => {
@@ -42,7 +42,7 @@ const studentSlice = createSlice({
         state.loading = false;
         state.error = action.error;
       })
-      .addCase(updateStudentData.pending, (state, action) => {
+      .addCase(updateStudentData.pending, (state) => {
         state.loading = true;
       })
       .addCase(updateStudentData.fulfilled, (state, action) => {
@@ -55,7 +55,7 @@ const studentSlice = createSlice({
         state.loading = false;
         state.error = action.error;
       })
-      .addCase(deleteStudentData.pending, (state, action) => {
+      .addCase(deleteStudentData.pending, (state) => {
         state.loading = true;
       })
       .addCase(deleteStudentData.fulfilled, (state, action) => {

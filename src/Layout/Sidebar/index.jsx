@@ -1,12 +1,9 @@
 import styles from "../Layout.module.css";
 import { NavLink, Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Sidebar = ({ sideBarRef, sideBarOpen }) => {
-  const location = useLocation();
-  // const selectedMenu = location.pathname.split("/").pop();
-
+ 
   const { role } = useSelector((state) => state?.userState?.user);
 
   return (
@@ -34,7 +31,6 @@ const Sidebar = ({ sideBarRef, sideBarOpen }) => {
                     className={({ isActive }) =>
                       `nav-link text-white ${isActive ? "active" : ""} `
                     }
-                    // className={`nav-link text-white ${selectedMenu === "dashboard" ? "active" : ""} `}
                     to="/app/admin/dashboard"
                     end
                   >

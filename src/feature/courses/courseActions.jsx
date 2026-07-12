@@ -32,7 +32,7 @@ export const postCourseData = createAsyncThunk(
 
 export const updateCourse = createAsyncThunk(
   "course/updateCourse",
-  async (courseData, thunkAPI) => {
+  async (courseData) => {
     const response = await apiClient.put(
       `/courses/${courseData.id}`,
       courseData,

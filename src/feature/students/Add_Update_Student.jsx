@@ -6,7 +6,7 @@ import Dropdown from "../../components/Dropdown";
 // import { useState, useRef, useEffect, useContext, useCallback } from "react";
 // import { AppContext } from "../context/AppContextProvider";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -21,7 +21,7 @@ const Add_Update_Student = () => {
 
   // const { students, courses, dispatch } = useContext(AppContext);
 
-  const { students, loading } = useSelector((state) => state.studentState);
+  const { students } = useSelector((state) => state.studentState);
   const { courses, onload } = useSelector((state) => state.courseState);
 
   const [searchParams] = useSearchParams();
@@ -37,6 +37,12 @@ const Add_Update_Student = () => {
     nameRef?.current?.focus();
   }, []);
 
+  const [formValues, setFormValues] = useState({
+    name: "",
+    contact: "",
+    course: "",
+  });
+
   useEffect(() => {
     if (studentId) {
       const studentToEdit = students?.find(
@@ -44,29 +50,24 @@ const Add_Update_Student = () => {
       );
 
       if (studentToEdit) {
-        setFormValues({ ...studentToEdit, course: studentToEdit?.course?.id });
+        setTimeout(() =>
+          setFormValues({
+            ...studentToEdit,
+            course: studentToEdit?.course?.id,
+          }),
+        );
       }
     }
   }, [studentId, students]);
 
-  const [formValues, setFormValues] = useState({
-    name: "",
-    contact: "",
-    course: "",
-  });
-
   const [formErrors, setFormErrors] = useState({});
-  const [courseOptions, setCourseOptions] = useState([]);
 
-  
-
-  useEffect(() => {
+  const courseOptions = useMemo(() => {
     const options = courses?.map((course) => ({
       label: course?.courseTitle,
       value: course?.id,
     }));
-
-    setCourseOptions(options);
+    return options;
   }, [courses]);
 
   const handleInputChange = useCallback((event) => {

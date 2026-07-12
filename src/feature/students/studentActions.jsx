@@ -26,7 +26,7 @@ export const postStudentData = createAsyncThunk(
 
 export const updateStudentData = createAsyncThunk(
   "student/updateStudentData",
-  async ({ studentId, studentData }, thunkAPI) => {
+  async ({ studentId, studentData }) => {
     const response = await apiClient.put(`/students/${studentId}`, studentData);
 
     return response?.data?.student;

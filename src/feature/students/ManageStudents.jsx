@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Table from "../../components/Table";
 import { useNavigate } from "react-router-dom";
@@ -11,13 +11,11 @@ import Unauthorized from "../../pages/Unauthorized";
 const ManageStudents = () => {
   const dispatch = useDispatch();
 
-  const { students, loading, onload, error } = useSelector(
+  const { students, loading, onload } = useSelector(
     (state) => state.studentState,
   );
- 
-  const { courses, onload: courseOnload } = useSelector(
-    (state) => state.courseState,
-  );
+
+  const { onload: courseOnload } = useSelector((state) => state.courseState);
 
   const navigate = useNavigate();
   // const [loading, setLoading] = useState(false);
@@ -36,14 +34,14 @@ const ManageStudents = () => {
   useEffect(() => {
     let promise;
 
-    if (!onload) {
+    if (!courseOnload) {
       promise = dispatch(getAllCourses());
     }
 
     return () => {
       promise?.abort();
     };
-  }, [dispatch, onload]);
+  }, [dispatch, onload, courseOnload]);
 
   useEffect(() => {
     // if (!courseOnload) {
@@ -78,7 +76,7 @@ const ManageStudents = () => {
         };
       })
     );
-  }, [students, courses]);
+  }, [students]);
 
   const handleDelete = (id) => {
     const result = confirm("Are you sure you want to delete this?");

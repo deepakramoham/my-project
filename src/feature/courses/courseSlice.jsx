@@ -31,7 +31,7 @@ const courseSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllCourses.pending, (state, action) => {
+      .addCase(getAllCourses.pending, (state) => {
         state.loading = true;
         state.status = "pending";
       })
@@ -47,7 +47,7 @@ const courseSlice = createSlice({
         state.status = "failed";
       })
 
-      .addCase(postCourseData.pending, (state, action) => {
+      .addCase(postCourseData.pending, (state) => {
         state.loading = true;
         state.operationSuccess = false;
         state.status = "pending";
@@ -65,7 +65,7 @@ const courseSlice = createSlice({
         state.modalOpen = true;
       })
 
-      .addCase(updateCourse.pending, (state, action) => {
+      .addCase(updateCourse.pending, (state) => {
         state.loading = true;
         state.status = "pending";
       })
@@ -84,7 +84,7 @@ const courseSlice = createSlice({
         state.modalOpen = true;
       })
 
-      .addCase(deleteCourse.pending, (state, action) => {
+      .addCase(deleteCourse.pending, (state) => {
         state.loading = true;
         state.status = "pending";
       })

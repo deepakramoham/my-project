@@ -2,13 +2,14 @@ import Input from "../../components/Input";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import { register } from "./userThunks";
 
 const SignUp = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+ 
+
+  const { loading } = useSelector((state) => state.userState);
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -16,14 +17,14 @@ const SignUp = () => {
   });
   const [formErrors, setFormErrors] = useState({});
 
-  const resetStates = () => {
-    setFormErrors({});
-    setFormValues({
-      name: "",
-      email: "",
-      password: "",
-    });
-  };
+  // const resetStates = () => {
+  //   setFormErrors({});
+  //   setFormValues({
+  //     name: "",
+  //     email: "",
+  //     password: "",
+  //   });
+  // };
   useEffect(() => {}, []);
 
   const handleInputChange = (e) => {
@@ -141,7 +142,7 @@ const SignUp = () => {
           <button className="btn btn-primary" onClick={handleSubmit}>
             Sign Up
           </button>
-          {false && <Loading />}
+          {loading && <Loading />}
         </div>
       </div>
     </div>

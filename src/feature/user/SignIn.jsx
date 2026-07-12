@@ -21,20 +21,20 @@ const SignIn = () => {
         navigate("/app/user/dashboard");
       }
     }
-  }, [user]);
+  }, [user, error, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues((preValues) => ({ ...preValues, [name]: value }));
   };
 
-  const resetStates = () => {
-    setFormErrors({});
-    setFormValues({
-      email: "",
-      password: "",
-    });
-  };
+  // const resetStates = () => {
+  //   setFormErrors({});
+  //   setFormValues({
+  //     email: "",
+  //     password: "",
+  //   });
+  // };
 
   useEffect(() => {}, []);
 

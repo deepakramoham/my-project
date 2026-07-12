@@ -17,9 +17,8 @@ const Table = ({ tableColumns, data, onAddClick, loading }) => {
         );
       }),
     );
-
     setFilteredData(filterData);
-  }, [data, search]);
+  }, [data, search, tableColumns]);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);

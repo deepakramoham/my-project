@@ -1,9 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import DashBoard from "../pages/DashBoard";
-import ManageStudents from "../feature/students/ManageStudents";
-import Add_Update_Student from "../feature/students/Add_Update_Student";
-import ManageCourses from "../feature/courses/ManageCourses";
+
 import RouteError from "../pages/RouteError";
 import SignUp from "../feature/user/SignUp";
 import SignIn from "../feature/user/SignIn";
@@ -11,6 +8,11 @@ import SessionOut from "../pages/SessionOut";
 import Unauthorized from "../pages/Unauthorized";
 import RouteProtector from "./RouteProtector";
 import ErrorBoundaryWrapperRoute from "./ErrorBoundaryWrapperRoute";
+import Add_Update_Student from "../feature/students/Add_Update_Student";
+import ManageCourses from "../feature/courses/ManageCourses";
+import DashBoard from "../pages/DashBoard";
+import ManageStudents from "../feature/students/ManageStudents";
+
 const router = createBrowserRouter([
   {
     path: "/",

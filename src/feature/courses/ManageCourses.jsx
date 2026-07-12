@@ -37,6 +37,14 @@ const ManageCourses = () => {
 
   const [tableData, setTableData] = useState([]);
 
+  const resetStates = () => {
+    setFormErrors({});
+    setFormValues({
+      courseTitle: "",
+      paidCourse: "",
+    });
+  };
+
   useEffect(() => {
     if (status && status === "success") {
       resetStates();
@@ -54,7 +62,7 @@ const ManageCourses = () => {
       toast.error(error || "Something went wrong");
       dispatch(resetStatus());
     }
-  }, [error, status]);
+  }, [error, status, dispatch]);
 
   // useEffect(() => {
   //   const controller = new AbortController();
@@ -105,7 +113,7 @@ const ManageCourses = () => {
   }, [modalOpen]);
 
   const handleInputChange = useCallback((event) => {
-    const { name, value, type, checked, selectedOptions } = event.target;
+    const { name, value, type, checked } = event.target;
     if (type === "checkbox") {
       if (checked) {
         setFormValues((prev) => ({
@@ -129,14 +137,6 @@ const ManageCourses = () => {
       }));
     }
   }, []);
-
-  const resetStates = () => {
-    setFormErrors({});
-    setFormValues({
-      courseTitle: "",
-      paidCourse: "",
-    });
-  };
 
   const validateFormValues = () => {
     const errors = {};
