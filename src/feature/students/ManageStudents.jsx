@@ -1,12 +1,17 @@
-import { useMemo, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Table from "../../components/Table";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
-import { deleteStudentData, getAllStudents } from "./studentActions";
+// import { deleteStudentData, getAllStudents } from "./studentActions";
 //import { getAllCourses } from "../../Redux/actions/courseActions";
-import { getAllCourses } from "../courses/courseActions";
+// import { getAllCourses } from "../courses/courseActions";
 import Unauthorized from "../../pages/Unauthorized";
+import { use } from "react";
+import { AiOutlineConsoleSql } from "react-icons/ai";
+
+let studentPromise = null;
+let stdData = null;
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
@@ -18,44 +23,70 @@ const ManageStudents = () => {
   const { onload: courseOnload } = useSelector((state) => state.courseState);
 
   const navigate = useNavigate();
-  // const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   const controller = new AbortController();
-  //   if (!courseOnload) {
-  //     dispatch(getAllCourses(controller));
-  //   }
-
-  //   return () => {
-  //     controller.abort();
-  //   };
-  // }, [dispatch, courseOnload]);
 
   useEffect(() => {
-    let promise;
-
-    if (!courseOnload) {
-      promise = dispatch(getAllCourses());
-    }
-
-    return () => {
-      promise?.abort();
-    };
+    // let promise;
+    // if (!courseOnload) {
+    //   promise = dispatch(getAllCourses());
+    // }
+    // return () => {
+    //   promise?.abort();
+    // };
   }, [dispatch, onload, courseOnload]);
 
-  useEffect(() => {
-    // if (!courseOnload) {
-    //   dispatch(getAllCourses());
-    // }
-
-    let promise;
-    if (!onload) {
-      promise = dispatch(getAllStudents());
+  const getStudentsDetails = async () => {
+    if (!studentPromise) {
+      await new Promise((resolve)=>setTimeout(resolve,2000));
+      studentPromise = fetch(
+        "https://coursemaster-backend-9wxk.onrender.com/students",
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJpZCI6IjY5N2ExNzM4OGI4YzI0M2FiNTMyMjZhYyIsInJvbGVzIjoxMTAwfSwiaWF0IjoxNzg0MzcyNTg1LCJleHAiOjE3ODQzNzQzODV9.fMmE8zYUBiKwzfhVt0c6gop4Dc8mSBNqulOAATMVe94`,
+          },
+        },
+      ).then((response) => response.json());
     }
+    return studentPromise;
+  };
 
-    return () => {
-      promise?.abort();
-    };
+  if (!stdData) {
+    stdData = use(getStudentsDetails());
+    
+  }
+
+  // useEffect(() => {
+  //   const getAllStudentsData = async () => {
+  //     try {
+  //       setLoadingStudents(true);
+
+  //       const response = await fetch(
+  //         "https://coursemaster-backend-9wxk.onrender.com/students",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJpZCI6IjY5N2ExNzM4OGI4YzI0M2FiNTMyMjZhYyIsInJvbGVzIjoxMTAwfSwiaWF0IjoxNzg0MzcwNzMzLCJleHAiOjE3ODQzNzI1MzN9.HOlXqpPLAEcQ9dvz-qag6D5E8YC_5RZ7AbsLLTab490`,
+  //           },
+  //         },
+  //       );
+  //       const data = await response.json();
+  //       setStudentData(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setLoadingStudents(false);
+  //     }
+  //   };
+
+  //   getAllStudentsData();
+  // }, []);
+
+  useEffect(() => {
+    // let promise;
+    // if (!onload) {
+    //   promise = dispatch(getAllStudents());
+    // }
+    // return () => {
+    //   promise?.abort();
+    // };
   }, [dispatch, onload]);
 
   const handleEdit = (editStudent) => {
@@ -120,13 +151,19 @@ const ManageStudents = () => {
 
   return (
     <>
-      {loading && <Loading />}
-      <Table
+      {/* {loading && <Loading />} */}
+      {/* <Table
         loading={loading}
         tableColumns={columnData}
         data={formattedData || []}
         onAddClick={handleAdd}
-      />
+      /> */}
+
+      <div>
+        {stdData?.map((student) => (
+          <div key={student?._id}>{JSON.stringify(student)}</div>
+        ))}
+      </div>
     </>
   );
 };

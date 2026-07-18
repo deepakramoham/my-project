@@ -8,11 +8,19 @@ import SessionOut from "../pages/SessionOut";
 import Unauthorized from "../pages/Unauthorized";
 import RouteProtector from "./RouteProtector";
 import ErrorBoundaryWrapperRoute from "./ErrorBoundaryWrapperRoute";
-import Add_Update_Student from "../feature/students/Add_Update_Student";
-import ManageCourses from "../feature/courses/ManageCourses";
+// import Add_Update_Student from "../feature/students/Add_Update_Student";
+// import ManageCourses from "../feature/courses/ManageCourses";
 import DashBoard from "../pages/DashBoard";
-import ManageStudents from "../feature/students/ManageStudents";
+import Loading from "../components/Loading";
+// import ManageStudents from "../feature/students/ManageStudents";
 
+import { lazy, Suspense } from "react";
+
+const ManageStudents = lazy(() => import("../feature/students/ManageStudents"));
+const ManageCourses = lazy(() => import("../feature/courses/ManageCourses"));
+const Add_Update_Student = lazy(
+  () => import("../feature/students/Add_Update_Student"),
+);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,7 +68,11 @@ const router = createBrowserRouter([
           },
           {
             path: "/app/admin/students",
-            element: <ManageStudents />,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <ManageStudents />
+              </Suspense>
+            ),
           },
           {
             path: "/app/admin/students/add-student",
