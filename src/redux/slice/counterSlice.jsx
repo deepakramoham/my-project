@@ -3,7 +3,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const getAllCourses = createAsyncThunk(
   "counter/getAllCourses",
   async () => {
-    const response = await fetch("https://todo-app-backend-5bep.onrender.com/task");
+    const response = await fetch(
+      "https://todo-app-backend-5bep.onrender.com/task",
+    );
     const result = await response.json();
     return result;
   },
@@ -22,7 +24,7 @@ const counterSlice = createSlice({
   reducers: {
     Increment: (state, action) => {
       console.log(action);
-      state.count = state.count + action.payload;
+      state.count++;
     },
     Decrement: (state) => {
       state.count--;
@@ -45,6 +47,9 @@ const counterSlice = createSlice({
       });
   },
 });
+
+// console.log(counterSlice.reducer);
+// console.log(counterSlice.actions);
 
 export const { Increment, Decrement } = counterSlice.actions;
 
