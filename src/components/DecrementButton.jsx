@@ -1,9 +1,10 @@
-import { Decrement } from "../redux/slice/counterSlice";
-import { useDispatch, useSelector } from "react-redux";
+
+import useCounterStore from "../Zustand/CounterStore";
+
 const DecrementButton = () => {
-  const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  return <button onClick={() => dispatch(Decrement())}>-</button>;
+  const decrement = useCounterStore((state) => state.decrement);
+
+  return <button onClick={decrement}>-</button>;
 };
 
 export default DecrementButton;
