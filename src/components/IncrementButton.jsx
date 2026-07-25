@@ -1,14 +1,16 @@
 import { getAllCourses, Increment } from "../redux/slice/counterSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import useCounterStore from "../Zustand/CounterStore";
+// import { useSelector } from "react-redux";
 
 const IncrementButton = () => {
-  const dispatch = useDispatch();
+  const { increment, decrement,courses, getAllCourses } = useCounterStore();
 
+  // const courses = useSelector((state) => state?.courses);
+  console.log(courses);
   return (
     <>
-      <button onClick={() => dispatch(Increment())}>+</button>
-      <button onClick={() => dispatch(getAllCourses())}>fetchTasks</button>
+      <button onClick={() => increment()}>+</button>
+      <button onClick={() => getAllCourses()}>fetchTasks</button>
     </>
   );
 };

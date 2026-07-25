@@ -8,11 +8,11 @@ import { AppContextProvider } from "./context/AppContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-  <Provider store={store}>
-    {/*  <AppContextProvider> */}
-    <App />
-    {/*  </AppContextProvider>, */}
-  </Provider>,
+  // <Provider store={store}>
+  // <AppContextProvider>
+  <App />,
+  //  </AppContextProvider>
+  // </Provider>,
 
   // </StrictMode>,
 );

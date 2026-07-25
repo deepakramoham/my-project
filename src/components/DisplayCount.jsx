@@ -1,6 +1,7 @@
-import { useSelector } from "react-redux";
+import useCounterStore from "../Zustand/CounterStore";
+
 const DisplayCount = () => {
-  const count = useSelector((state) => state.count);
+  const { count } = useCounterStore();
 
   return <div>{count}</div>;
 };
