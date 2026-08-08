@@ -49,7 +49,7 @@ const courseSlice = createSlice({
 
       .addCase(postCourseData.pending, (state) => {
         state.loading = true;
-        state.operationSuccess = false;
+
         state.status = "pending";
       })
       .addCase(postCourseData.fulfilled, (state, action) => {

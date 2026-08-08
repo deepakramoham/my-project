@@ -7,7 +7,6 @@ import { deleteStudentData, getAllStudents } from "./studentActions";
 import { getAllCourses } from "../courses/courseActions";
 import Unauthorized from "../../pages/Unauthorized";
 import { use } from "react";
-import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const ManageStudents = () => {
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const ManageStudents = () => {
     return () => {
       promise?.abort();
     };
-  }, [dispatch, onload, courseOnload]);
+  }, [dispatch, courseOnload]);
 
   useEffect(() => {
     let promise;

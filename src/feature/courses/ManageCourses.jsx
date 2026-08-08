@@ -3,24 +3,36 @@ import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import RadioButton from "../../components/RadioButton";
 import Table from "../../components/Table";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { openModal, closeModal, resetStatus } from "./courseSlice";
+import useCounterStore from "./counterStore";
+// import { openModal, closeModal, resetStatus } from "./courseSlice";
 //import { selectAllCourses } from "../Redux/reducers/courseReducer";
-import {
-  getAllCourses,
-  postCourseData,
-  updateCourse,
-  deleteCourse,
-} from "./courseActions";
+// import {
+//   getAllCourses,
+//   postCourseData,
+//   updateCourse,
+//   deleteCourse,
+// } from "./courseActions";
 
 const ManageCourses = () => {
   const nameRef = useRef(null);
 
-  const dispatch = useDispatch();
-  const { courses, onload, error, status, modalOpen } = useSelector(
-    (state) => state.courseState,
-  );
+  // const dispatch = useDispatch();
+  const {
+    courses,
+    onload,
+    error,
+    status,
+    modalOpen,
+    openModal,
+    closeModal,
+    resetStatus,
+    getAllCourses,
+    postCourseData,
+    updateCourse,
+    deleteCourse,
+  } = useCounterStore();
 
   console.log(error);
 
@@ -48,21 +60,21 @@ const ManageCourses = () => {
   useEffect(() => {
     if (status && status === "success") {
       resetStates();
-      dispatch(resetStatus());
+      resetStatus();
       // toast.success(
       //   error?.data?.message ||
       //     error?.message ||
       //     "Something went wrong",
       // );
     }
-  }, [status, dispatch]);
+  }, [status]);
 
   useEffect(() => {
     if (error && status === "failed") {
       toast.error(error || "Something went wrong");
-      dispatch(resetStatus());
+      resetStatus();
     }
-  }, [error, status, dispatch]);
+  }, [error, status]);
 
   // useEffect(() => {
   //   const controller = new AbortController();
@@ -74,14 +86,15 @@ const ManageCourses = () => {
   //   };
   // }, [dispatch]);
   useEffect(() => {
-    let promise;
+    const getController = new AbortController();
     if (!onload) {
-      promise = dispatch(getAllCourses());
+      getAllCourses(getController);
     }
     return () => {
-      promise?.abort();
+      // promise?.abort();
+      getController?.abort();
     };
-  }, [dispatch, onload]);
+  }, [onload]);
   useEffect(() => {
     const formattedData = courses?.map((course, index) => ({
       ...course,
@@ -92,7 +105,7 @@ const ManageCourses = () => {
   }, [courses]);
 
   const handleEdit = (editCourse) => {
-    dispatch(openModal());
+    openModal();
     const updatedCourse = courses?.find(
       (course) => course?.id === editCourse?.id,
     );
@@ -102,7 +115,7 @@ const ManageCourses = () => {
   const handleDelete = (id) => {
     const result = confirm("Are you sure you want to delete this?");
     if (result) {
-      dispatch(deleteCourse(id));
+      deleteCourse(id);
     }
   };
 
@@ -152,22 +165,22 @@ const ManageCourses = () => {
   const handleSubmit = () => {
     if (validateFormValues()) {
       if (formValues.id) {
-        dispatch(updateCourse(formValues));
+        updateCourse(formValues);
       } else {
         const newCourse = {
           id: crypto.randomUUID(),
           ...formValues,
         };
-        dispatch(postCourseData(newCourse));
+        postCourseData(newCourse);
       }
     }
   };
   const handleAdd = () => {
-    dispatch(openModal());
+    openModal();
   };
 
   const handleClose = () => {
-    dispatch(closeModal());
+    closeModal();
     resetStates();
   };
 
